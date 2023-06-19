@@ -1,0 +1,107 @@
+.videoprogressindicator{
+    --bar-color:red;
+    --progress-width:0%;
+}
+
+
+.videoContainer{ 
+    width:100%;
+    height: 100%;  
+    background-color:transparent;
+    /* border:1px solid red */
+}
+
+.videoHolder{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color:transparent;
+    display: flex;
+    justify-content: center;
+    
+}
+
+
+
+.videoControl{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index:18; 
+    opacity:1;
+    transition: 0.25s ease-in-out; 
+    /* border:1px solid red; */
+}
+
+.videoControl:hover{
+    opacity: 1;
+}
+
+.videocontrolsmenu{
+    width:100%;
+    height:60px;
+    background-image: linear-gradient(to top, black , transparent);
+    position: absolute;
+    bottom:0px; 
+    display:flex;
+}
+
+.videocontrolholder{
+    height:100%;
+    width:20%;
+    /* border:1px solid red; */
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+}
+
+.videoprogressholder{
+    height:100%;
+    width:80%;
+    /* border:1px solid red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.videoprogressbarholder{
+    width:75%;
+    height:5px;
+    background-color: black;
+    position: relative;
+}
+
+.videoprogressindicator{
+    height:100%;
+    background-color: var(--bar-color);
+    width:var(--progress-width);
+    position: absolute;
+}
+
+.mainVideo{
+    position: absolute;
+    width: fit-content;
+    height: 100%;
+    z-index: 16;
+    background-color: transparent;
+}
+
+.mainVideo:hover{
+    color:pink;
+    display: none;
+    
+}
+
+.backVideo{
+    position: absolute;
+    width: 100%;
+    height: 110%;
+    filter: blur(400px); 
+    z-index:-1;
+    display: flex;
+    justify-content:center;
+    background-color: transparent;
+    opacity:0.9;
+    transition: 0.5s ease-in-out; 
+}
+

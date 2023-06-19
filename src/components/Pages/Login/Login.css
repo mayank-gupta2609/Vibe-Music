@@ -1,0 +1,143 @@
+.login-holder{
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    color: aliceblue;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.welcome{
+    color:aliceblue;
+    width: 100%;
+    /* border:1px solid black;  */
+    display: flex;
+    justify-content: center;
+    font-size: 45px;
+}
+.login-div{
+    background-color:rgb(27 27 27);
+    height:400px;
+    width: 400px;
+    border-radius: 10px;
+    display:flex;
+    justify-content:space-evenly;
+    align-items: center;
+    flex-direction:column;
+    color: aliceblue;
+}
+
+
+.logininput{
+    width: 100%;
+    height: 100%;
+    border:none; 
+    font-size: 25px;
+    border-radius:10px;
+    background-color: #212121;
+    color:whitesmoke;
+    padding-left:10px;
+    outline: none;
+}
+
+.usernameinput{
+    width:80%;
+    height:55px;
+    border:1px solid #232323;
+    margin-bottom:20px;
+    position:relative; 
+    border-radius:10px;
+    padding-right:30px;
+}
+
+.passwordinput{
+    width:80%;
+    height:55px;
+    font-size: 20px;
+    border:1px solid #232323;
+    position:relative; 
+    padding-right:30px;
+    border-radius:10px;
+}
+
+.usernametext{
+    --font-size:18px;
+    
+}
+
+.usernametext{
+    position: absolute;
+    z-index:10;
+    font-size:var(--font-size);
+    transition: 0.15s ease-in-out;
+    top:-14px;
+    left:10px;
+    color:rgb(135, 165, 192)
+}
+
+.passwordtext{
+    --font-size:18px;
+}
+
+.passwordtext{
+    position: absolute;
+    z-index:10;
+    font-size:var(--font-size);
+    transition: 0.15s ease-in-out;
+    top:10px;
+    left:10px;
+    top:-15px;
+    left:10px;
+    color:rgb(135, 165, 192)
+}
+
+.uname{
+    height: 100%; 
+    top:0px;
+    left:0px;
+    width:100%;
+    position: absolute;
+    z-index:4;
+}
+
+.pwd{
+    height: 100%; 
+    top:0px;
+    left:0px;
+    width:100%;
+    position: absolute;
+    z-index:4;
+}
+
+.login-button{ 
+    margin-top:20px;
+    height:fit-content;
+    width:fit-content;
+    font-size:25px;
+    background-color: rgb(61, 61, 61);
+    color:azure;
+    border-radius: 10px;
+    outline: none;
+    border:0;
+    padding: 10px;
+    cursor: pointer;
+    transition:0.1s ease-in-out
+}
+
+.login-button:hover{
+    transform: scale(0.9);
+}
+
+.signup{
+    color: snow;
+}
+
+.signupspan{
+    color:aquamarine;
+    margin-left:2px
+}
+
+.signupspan:hover{
+    text-decoration: underline; 
+}

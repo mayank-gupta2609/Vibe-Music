@@ -1,0 +1,247 @@
+.audioprogressindicator {
+    --progress-width: 0%;
+    --bar-color: red;
+
+}
+
+.additionalContent {
+    --add-content-visibility: hidden;
+}
+
+
+
+.playerContainer {
+    width: 100%;
+    height: 100%;
+    /* border:1px solid red; */
+    z-index: 600;
+    border-radius: 10px;
+    position: relative;
+    background-color: #212121;
+}
+
+.playerHolder {
+    position: absolute;
+    height: 105px;
+    width: 100%;
+    /* border:1px solid red; */
+    border-radius: 10px;
+    bottom: 0px;
+    display: flex
+        /* background-color:blue; */
+}
+
+.albumpic {
+    height: 100%;
+    /* border:1px solid blue; */
+    width: 100px;
+}
+
+img {
+    background-color: transparent;
+    border:none
+}
+
+.audiodetails {
+    height: 100%;
+    /* border:1px solid green; */
+    width: 40%;
+}
+
+.musicnameholder {
+    height: 50%;
+    font-size: 28px;
+    color: white;
+    padding-top: 3px;
+    padding-left: 3px;
+    box-sizing: border-box;
+    /* border:1px solid red */
+}
+
+.musicnameaudio {
+    height: 100%;
+}
+
+.artistsholder {
+    height: 50%;
+    display: flex;
+    padding-left: 3px;
+    /* border:1px solid red */
+}
+
+.artistnameholder {
+    color: gainsboro;
+    margin: 3px;
+    /* border:1px solid red */
+}
+
+.audiocontrols {
+    --pointer: ;
+    --bg-color: transparent;
+}
+
+
+.audiocontrols {
+    flex-grow: 1;
+    /* border:1px solid pink;  */
+    pointer-events: var(--pointer);
+    /* background-color: var(--bg-color); */
+    transition: 0.25s ease-in-out;
+}
+
+.audiocontrolsholder {
+    height: 50%;
+    width: 100%;
+    /* border:1px solid yellow; */
+}
+
+.audiocontrolsmenu {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    color: white;
+    align-items: center;
+    /* border:1px solid red */
+}
+
+
+.audioprogressbarholder {
+    height: 50%;
+    width: 100%;
+    /* border:1px solid blue; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.audioprogressbar {
+    width: 75%;
+    height: 4px;
+    background-color: black;
+    position: relative;
+    /* border:1px solid red */
+}
+
+.audioprogressindicator {
+    position: absolute;
+    height: 100%;
+    width: var(--progress-width);
+    background-color: var(--bar-color);
+}
+
+.additionalContent {
+    /* border:1px solid pink; */
+    width: 100%;
+    height: 100%;
+    /* background-color:orange; */
+    visibility: var(--add-content-visibility);
+}
+
+.additionalContentOptionHolder {
+    width: 100%;
+    height: 28px;
+    /* border:1px solid red; */
+    display: flex;
+    justify-content: center;
+
+}
+
+.additionalContentOptions {
+    height: 100%;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin-left: 8px;
+    padding: 1px 2px 1px 2px;
+    font-size: 15px;
+
+}
+
+.addContentOptionActive {
+    border: 1px solid whitesmoke;
+}
+
+.additionalContentHolder {
+    width: 100%;
+    /* border:1px solid green; */
+    height: 80%;
+    border-radius: 10px;
+    margin-top: 1px;
+}
+
+.audioContentHolder {
+    --background-color: rgb(27 27 27);
+}
+
+.audioContentHolder {
+    color: white;
+    width: 100%;
+    height: 100%;
+    /* border:1px solid yellowgreen; */
+    border-radius: 10px;
+    /* background-color: red */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background-color);
+    background-image: url()
+}
+
+.audiocontentalbumpic {
+    height: 300px;
+    width: 300px
+}
+
+.active {
+    display: flex;
+}
+
+.inactive {
+    display: none;
+}
+
+
+.videoContentHolder {
+    color: pink;
+    width: 100%;
+    height: 100%;
+    /* border:1px solid yellowgreen; */
+    /* background-color: pink */
+    /* position: relative; */
+}
+
+.lyricsContentHolder {
+    --background-color: hotpink;
+}
+
+.lyricsContentHolder {
+    width: 100%;
+    height: 100%;
+    color: whitesmoke;
+    border: 1px solid hotpink;
+    background-color: var(--background-color);
+    font-size: 60px;
+    display: flex;
+    flex-direction: column;
+}
+
+.lyriclineholder {
+    width: 100%;
+    height: fit-content;
+    /* border:1px solid red; */
+    transition: 0.15s ease-in-out;
+}
+
+.lyriclineactive {
+    opacity: 1;
+}
+
+.lyriclineinactive {
+    opacity: 0.7;
+}
+
+.queueContentHolder {
+    width: 100%;
+    height: 100%;
+
+}
