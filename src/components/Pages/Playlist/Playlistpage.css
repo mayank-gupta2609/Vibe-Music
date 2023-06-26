@@ -5,15 +5,16 @@
 .playlist-container{
     width: 100%;
     height: 100%;
-    border: 1px solid red;  
-    overflow: auto;
+    /* border: 1px solid red;   */
+    overflow: auto; 
+    
 }
 
 .playlistheader{
     width: 100%;
-    height: 35%;
+    height: 40%;
     /* background-color:red; */
-    padding-top: 60px;
+    padding-top: 70px;
     padding-left: 20px;
     display: flex;
 }
@@ -22,7 +23,7 @@
     height:100%;
     flex-grow:1;
     margin-left:15px;
-    border:1px solid red; 
+    /* border:1px solid red;  */
     font-family: 'Roboto', sans-serif;
 
 }
@@ -43,10 +44,12 @@ span{
 .playlistinforow{
     width:100%;
     height:40px;
-    border:1px solid red;
+    /* border:1px solid red; */
     display:flex;
     justify-content:flex-start;
     align-items: center;
+    font-size:16px;
+    margin-top:10px
 }
 
 .playlistinfoserialno{
@@ -56,6 +59,7 @@ span{
 
 .playlistinfoname{
     width:80%;
+    padding-left:15px;
 }
 
 .playlistinfoduration{
@@ -65,13 +69,94 @@ span{
 .playlistsongdetail{
     width:100%;
     height:55px;
-    border:1px solid blue;
+    /* border:1px solid blue; */
     display: flex;
     align-items: center;
-    font-size:17px
+    font-size:17px; 
 }
 
 .history{
     font-size:150px;
     padding-top:10px
+}
+
+.addmusictoplaylist{
+    background-color:rgb(57, 57, 57);
+    height:40px;
+    outline:none;
+    border:none;
+    width:400px; 
+    color:white;
+    font-size:18px;
+    padding-left:10px;
+    font-weight: bold;
+    font-family: 'Red Hat Display', sans-serif;
+    
+}
+
+.inputforempltyplaylist{
+    width: 100%;
+    /* border:1px solid pink; */
+    margin-top: 10px;
+    height:280px;
+    overflow: hidden;
+}
+
+.emptyplaylistholder{
+    height: 100%;
+    /* background-color:red;; */
+}
+
+.searchedsongs{
+    height:80%;
+    /* border:1px solid blue; */
+    /* margin-top:5px; */
+    overflow: auto;
+}
+
+.searchedsongs::-webkit-scrollbar {
+    display: none; /* or add it to the track */
+}
+
+
+.searchedsongitem{
+    /* border:1px solid yellow; */
+    width:400px;
+    height:50px;
+    margin-top:5px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.searchedmusicname{
+    flex-grow: 1;
+    height:100%;
+    font-size:19px;
+    /* border:1px solid red; */
+    display:flex;
+    align-items:center;
+    padding-left:10px
+}
+
+.searchedartistname{
+    height:100%;
+    width:100px;
+    border:1px solid red;
+}
+
+
+.playlistemptyinfo{
+    color:azure; 
+    font-size:25px;
+    padding-left:40px;
+    display: flex;
+    flex-direction: column;
+    font-weight: 700;
+    font-family: 'Red Hat Display', sans-serif;
+
+}
+
+.playlistinfoartist{
+    width:15%;
+    /* border:1px solid red */
 }

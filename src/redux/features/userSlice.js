@@ -9,11 +9,12 @@ const initialState = {
     playlists: null, //list of playlists
     activeplaylist: '', //current active playlist
     searchedterm: '',
-    songs: null, //list of songs in that component
+    songslist: null, //list of songs in that component
     logged_in: false,
-    current_song_index: 0,
+    songIndex: 0,
     likedsongs: [],
     liked: 0,
+    likeslist:[]
 }
 
 const userSlice = createSlice({
@@ -33,8 +34,8 @@ const userSlice = createSlice({
         setTracklist: (state, action) => {
             state.tracklist = action.payload
         },
-        setSongs: (state, action) => {
-            state.songs = action.payload
+        setSongsList: (state, action) => {
+            state.songslist = action.payload
         },
         setPlaylist: (state, action) => {
             state.playlists = action.payload
@@ -52,13 +53,13 @@ const userSlice = createSlice({
             state.searcheditems = action.payload
         },
         setSongIndex: (state, action) => {
-            state.current_song_index = action.payload
+            state.songIndex = action.payload
         },
         setNextSong: (state, action) => {
-            state.current_song_index = state.current_song_index + 1
+            state.songIndex = state.songIndex + 1
         },
         setPrevSong: (state, action) => {
-            state.current_song_index = state.current_song_index - 1
+            state.songIndex = state.songIndex - 1
         },
         setSwitched: (state, action) => {
             state.switched = action.payload
@@ -80,10 +81,13 @@ const userSlice = createSlice({
         },
         setLiked: (state, action) => {
             state.liked = state.liked + action.payload
+        },
+        setLikesList: (state, action) => {
+            state.likeslist = action.payload
         }
     }
 });
 
-export const { setUser,setAudio, setAudioState, setSongs, setPlaylist, setActivePlaylist, setLoggedIn, setTracklist, setSongIndex, setNextSong, setPrevSong, setSearchTerm, setSearcheditems, setSwitched, setSong, setTrackPlaying, setVidSrc, setUpdated, setLikedsongs, setLiked } = userSlice.actions;
+export const { setUser,setAudio, setAudioState, setSongsList, setPlaylist, setActivePlaylist, setLoggedIn, setTracklist, setSongIndex, setNextSong, setPrevSong, setSearchTerm, setSearcheditems, setSwitched, setSong, setTrackPlaying, setVidSrc, setUpdated, setLikedsongs, setLiked, setLikesList } = userSlice.actions;
 
 export default userSlice.reducer;

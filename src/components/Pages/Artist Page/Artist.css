@@ -1,43 +1,66 @@
-.artist-detail{
-    width:100%;
-    height:100%; 
+.artist-detail {
+    width: 100%;
+    height: 100%;
     padding-bottom: 100px;
     overflow: auto;
+    /* border:1px solid red */
 }
 
-.artist-container{
-    width:100%;
-    height:100%;
-    padding-top:60px;
+.artist-detail::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.artist-detail::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+.artist-detail::-webkit-scrollbar-thumb {
+    background: #323232;
+}
+
+/* Handle on hover */
+.artist-detail::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.artist-container {
+    width: 100%;
+    height: 100%;
+    padding-top: 60px;
     padding-bottom: 100px;
 }
 
-.topheader{
-    width:100%;
+.topheader {
+    width: 100%;
     height: 50%;
     overflow: hidden;
-    position:relative;
+    position: relative;
 }
 
-.artistnameheader{
-    position:absolute;
-    bottom:0px;
-    font-size:80px;
-    left:20px;
-    font-family: 'Geologica', sans-serif;
+.artistnameheader {
+    position: absolute;
+    bottom: 0px;
+    font-size: 85px;
+    left: 20px;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
-.albumcard{
-    height:270px;
-    width:200px;
-    border:1px solid red;
+.albumcard {
+    height: 250px;
+    width: 200px;
+    /* border:1px solid red; */
     flex-shrink: 0;
-    margin:10px;
+    margin: 10px;
     background-color: #212121;
-    border-radius: 3px;
+    border-radius: 7px;
+    overflow: hidden
 }
 
-.albumname{
-    font-size:20px;
-    font-family: 'Geologica', sans-serif;
+.albumname {
+    font-size: 25px;
+
+    font-family: 'Red Hat Display', sans-serif;
+    text-align: center;
 }

@@ -21,10 +21,8 @@ import PageContent from './Shared/PageContent/PageContent';
 const Main = () => {
     const [songs, setSongs] = useState<any>([])
     const [loading, setLoading] = useState<boolean>(false)
-    
     const { audio } = useSelector((state: any) => state.user)
 
-   
     return (
         <div className="container">
             <div className="sidebar">

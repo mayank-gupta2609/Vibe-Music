@@ -71,9 +71,9 @@ const Video = () => {
                 <div className="videoControl">
                     <div className="videocontrolsmenu">
                         <div className="videocontrolholder">
-                            <i className="fa-solid fa-backward"></i>
+                            {/* <i className="fa-solid fa-backward"></i> */}
                             <i className={`fa-solid fa-${vState === "pause" ? "play" : "pause"}`} onClick={()=>toggleVideoState()}></i>
-                            <i className="fa-solid fa-forward"></i>
+                            {/* <i className="fa-solid fa-forward"></i> */}
                         </div>
                         <div className="videoprogressholder" id="videoprogressholder">
                             <div className="videoprogressbarholder" id="videoprogressbarholder" onClick={(e)=>{

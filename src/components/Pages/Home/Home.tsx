@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import {
-    collection,
-    doc,
-    orderBy,
-    query,
-    setDoc,
-    Timestamp,
-    addDoc,
-    where, deleteDoc, updateDoc, DocumentData, QueryDocumentSnapshot, getDocs
-} from "firebase/firestore";
-import { db } from '../../../firebaseConfig';
+// import {
+//     collection,
+//     doc,
+//     orderBy,
+//     query,
+//     setDoc,
+//     Timestamp,
+//     addDoc,
+//     where, deleteDoc, updateDoc, DocumentData, QueryDocumentSnapshot, getDocs
+// } from "firebase/firestore";
+// import { db } from '../../../firebaseConfig';
 import SongCard from '../../Shared/SongCard/SongCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLikedsongs } from '../../../redux/features/userSlice';
+import { setLikedsongs, setTracklist, setSongIndex, setSong, setSongsList } from '../../../redux/features/userSlice';
 import { settracks } from '../../../redux/features/albumSlice';
+import SongCardLoader from '../../Shared/Loader/SongCardLoader';
 
 const Home = () => {
     const [songs, setSongs] = useState<any>([])
     const [loading, setLoading] = useState<boolean>(false)
     const dispatch = useDispatch();
-    const { user } = useSelector((state:any) => state.user)
+    const { user, songslist } = useSelector((state: any) => state.user)
 
     React.useEffect(() => {
 
@@ -28,7 +29,7 @@ const Home = () => {
         div?.addEventListener("scroll", () => {
             // console.log(div.scrollTop)
             let t: number = div.scrollTop / 150
-            console.log(t)
+            // console.log(t)
             document.getElementById("headerholder")?.style.setProperty("--alpha", "1")
             document.getElementById("additionalTab")?.style.setProperty("--opacity", "0")
         })
@@ -40,10 +41,10 @@ const Home = () => {
         setLoading(true)
         let data = await fetch('http://localhost:5000/api/songs/getallsongs');
         let response = await data.json();
-        console.log(response)
+        // console.log(response)
         settracks(response);
-        setLoading(false)
         setSongs(response)
+        setLoading(false)
     }
 
     const getLikedSongs = async () => {
@@ -53,17 +54,23 @@ const Home = () => {
         }
 
 
-        let response = await fetch(`http://localhost:5000/api/likedsongs/getlikedsongs/${user.uid}`, {
+        let response = await fetch(`http://localhost:5000/api/likedsongs/getlikedsongs/${user?.uid}`, {
             method: "GET",
             headers: headersList
         });
 
         let data = await response.json();
-        dispatch(setLikedsongs(data.ids));  
+        dispatch(setLikedsongs(data.ids));
         setLoading(false)
     }
 
+    const updateCurrentSongList = () => {
+        console.log(songs)
+        dispatch(setSongsList(songs))
+        console.log(songslist)
+    }
 
+    console.log(document.cookie)
     useEffect(() => {
         getSongs()
     }, [])
@@ -76,15 +83,24 @@ const Home = () => {
 
 
             <div className="holder">
-                {songs?.map((song: any) => {
-                    return <SongCard key={song._id} song={song}></SongCard>
+                {
+                    loading && <div style={{
+                        display:'flex'
+                    }}>
+                            <SongCardLoader></SongCardLoader>
+                            <SongCardLoader></SongCardLoader>
+                            <SongCardLoader></SongCardLoader>
+                    </div>
+                }
+                {!loading && songs?.map((song: any, index: number) => {
+                    return <SongCard key={song._id} song={song} index={index} onClick={() => updateCurrentSongList()}></SongCard>
                 })}
             </div>
 
             <h1>Trending</h1>
             <div className="holder">
-                {songs?.map((song: any) => {
-                    return <SongCard key={song._id} song={song}></SongCard>
+                {songs?.map((song: any, index: number) => {
+                    return <SongCard key={song._id} song={song} index={index} onClick={() => updateCurrentSongList()}></SongCard>
                 })}
             </div>
         </div>

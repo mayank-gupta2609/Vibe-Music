@@ -130,4 +130,16 @@
     font-size:19px;
     color:antiquewhite
 }
+
+.refresh{
+    color:white;
+    display: flex;
+    align-items:center;
+    margin-left:3px;
+    width:97%;
+    justify-content: center;  
+    margin-top:10px;
+    font-size:20px;
+    margin-bottom:10px;
+}
  
