@@ -1,67 +1,70 @@
-.headerholder{
-    --alpha:0;
-    --color:27, 27, 27
+.headerholder {
+    --alpha: 0;
+    --color: 27, 27, 27
 }
 
-.headerholder{
-    position:absolute;
-    top:0px;
-    width:100%;
-    height:70px;
+.headerholder {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 70px;
     /* border:1px solid red; */
-    z-index:10;
+    z-index: 10;
     font-size: 26px;
     display: flex;
     justify-content: space-between;
-    background-color: rgba(var(--color), var(--alpha)); 
+    background-color: rgba(27, 27, 27, 0.6);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 20px 30px rgba(27, 27, 27, 0.6);
+    backface-visibility: hidden;
 }
 
-.input{
+.input {
     width: 100%;
-    height:100%;
-    border: 0px ;
-    border-radius:50px;
+    height: 100%;
+    border: 0px;
+    border-radius: 50px;
     background-color: black;
     outline: none;
     color: white;
-    font-size:25px;
-    padding-left:15px;
-    margin-right:10px;
-    border-radius:60px 0px 0px 60px;
+    font-size: 25px;
+    padding-left: 15px;
+    margin-right: 10px;
+    border-radius: 60px 0px 0px 60px;
 }
 
-.inputholder{
-    width:50%;
-    display:flex;
-    align-items:center;
-    height:80%;
+.inputholder {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    height: 80%;
     background-color: #212121;
     border-radius: 50px;
-    margin:5px;
+    margin: 5px;
     /* border:1px solid red  */
 }
 
-.usernameholder{
-    border:3px solid rgb(243, 145, 225);
+.usernameholder {
+    border: 3px solid rgb(243, 145, 225);
     height: fit-content;
-    margin:8px; 
-    padding:4px 10px;
-    border-radius:40px; 
-    font-size:20px;
-    margin-right:20px;
+    margin: 8px;
+    padding: 4px 10px;
+    border-radius: 40px;
+    font-size: 20px;
+    margin-right: 20px;
 }
 
-.additionalTab{
-    --opacity:0
+.additionalTab {
+    --opacity: 0
 }
 
-.additionalTab{
-    display:flex;
-    padding-top:13px;
+.additionalTab {
+    display: flex;
+    padding-top: 13px;
     opacity: var(--opacity);
-    border:1px solid blue;
+    border: 1px solid blue;
     justify-content: center;
     align-items: center;
     flex-grow: 1;
-    
+
 }

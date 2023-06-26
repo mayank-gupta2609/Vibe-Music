@@ -25,7 +25,7 @@ const Player = () => {
     const method = useRef("post")
     const userlike = useRef(false)
     const indexRef = useRef(songIndex)
-    const lyrics = [[10.16, 13.12, ' Record scratch, Steve Miller band\n'], [13.12, 16.11, ' Tattooed necks and tattooed hands\n'], [16.11, 22.88, " Oh, how don't you drown in a rain storm?\n"], [22.88, 25.85, ' Fresh regrets, vodka sweats\n'], [25.85, 36.12, " The sun is down and we're bound to get exhausted and so far from the shore\n"], [36.12, 37.37, " You're never gonna get it\n"], [37.37, 39.36, " I'm a hazard to myself\n"], [39.36, 40.62, " I'll break it to you easy\n"], [40.62, 42.36, ' This is hell, this is hell\n'], [42.36, 45.63, " You're looking and whispering you think I'm someone else\n"], [45.63, 47.12, ' This is hell, yes\n'], [47.12, 48.62, ' Literal hell\n'], [48.62, 49.86, " We don't have to talk\n"], [49.86, 51.63, " We don't have to dance\n"], [51.63, 53.14, " We don't have to smile\n"], [53.14, 54.9, " We don't have to make friends\n"], [54.9, 56.38, " It's so nice to meet you\n"], [56.38, 58.36, " Let's never meet again\n"], [58.36, 59.87, " We don't have to talk\n"], [59.87, 61.62, " We don't have to dance\n"], [61.62, 65.6, " We don't have to dance\n"], [65.6, 68.87, ' Bottles smashed, I raised my hand\n'], [68.87, 72.12, ' How can you all even stand?\n'], [72.12, 78.89, ' And why is there joy in this poison? Oh\n'], [78.89, 81.87, ' Faking smiles and confidence\n'], [81.87, 86.12, ' Driving miles to capture this excitement\n'], [86.12, 92.1, " I can't take anymore\n"], [92.1, 93.36, " You're never gonna get it\n"], [93.36, 95.13, " I'm a hazard to myself\n"], [95.13, 96.62, " I'll break it to you easy\n"], [96.62, 98.37, ' This is hell, this is hell\n'], [98.37, 100.12, " You're looking and whispering\n"], [100.12, 101.62, " You think I'm someone else\n"], [101.62, 102.9, ' This is hell, yes\n'], [102.9, 104.37, ' I am in hell\n'], [104.37, 105.88, " We don't have to talk\n"], [105.88, 107.37, " We don't have to dance\n"], [107.37, 108.87, " We don't have to smile\n"], [108.87, 110.62, " We don't have to make friends\n"], [110.62, 112.13, " It's so nice to meet you\n"], [112.13, 113.87, " Let's never meet again\n"], [113.87, 115.63, " We don't have to talk\n"], [115.63, 117.37, " We don't have to dance\n"], [117.37, 121.12, " We don't have to dance\n"], [121.12, 122.12, ' Yeah, yeah\n'], [122.12, 134.62, ' Yeah, yeah\n'], [134.62, 136.12, " You're never gonna get it\n"], [136.12, 137.88, " I'm a hazard to myself\n"], [137.88, 139.36, " I'll break it to you easy\n"], [139.36, 141.11, ' This is hell, this is hell\n'], [141.11, 142.88, " You're looking and whispering\n"], [142.88, 144.12, " You think I'm someone else\n"], [144.12, 145.65, ' This is hell, yes\n'], [145.65, 148.87, ' Literal hell\n'], [148.87, 150.36, " We don't have to talk\n"], [150.36, 151.87, " We don't have to dance\n"], [151.87, 153.37, " We don't have to smile\n"], [153.37, 155.11, " We don't have to make friends\n"], [155.11, 156.62, " It's so nice to meet you\n"], [156.62, 158.37, " Let's never meet again\n"], [158.37, 160.13, " We don't have to talk\n"], [160.13, 161.89, " We don't have to dance\n"], [161.89, 165.37, " We don't have to dance\n"], [165.37, 167.12, " We don't have to talk\n"], [167.12, 168.37, " We don't have to talk\n"], [168.37, 172.12, " We don't have to dance\n"], [172.12, 173.63, " We don't have to talk\n"], [173.63, 175.15, ' Talk, talk\n'], [175.15, 181.86, " We don't have to dance\n"], [181.86, 183.62, " We don't have to talk\n"], [183.62, 186.62, ' Talk, talk, talk, talk\n'], [186.62, 187.62, ' Talk, talk, talk, talk']]
+    const [lyrics, setLyrics] = useState<[string]>() 
     // const { audio } = useSelector((state:any) => state.user)
     // const [like, setLike] = useState<any[]>([])
     // const [likedSongsList, setLikedSongsList] = useState<any[]>([]);
@@ -293,6 +293,22 @@ const Player = () => {
     //     dispatch(setLiked(false))
     // }
 
+    const getSongLyrics = async () => {
+        let headersList = { 
+            "Content-Type": "application/json"
+        }
+
+        let response = await fetch(`http://localhost:5000/api/songs/getsonglyrics/${audio?.name}`, {
+            method: "GET",
+            headers: headersList
+        });
+
+        let data = await response.json();
+        setLyrics(data?.lyricContent)
+        console.log(data);
+
+    }
+
     React.useEffect(() => {
         updateHistory()
     }, [audio])
@@ -348,10 +364,11 @@ const Player = () => {
         //     setLiked_(true)
         // }
         // console.log(likedsongs?.includes(audio?._id))
+        getSongLyrics()
         checkLike()
     }, [audio])
 
-    React.useEffect(()=>{
+    React.useEffect(() => {
         dispatch(setSongIndex(0))
     }, [])
 
@@ -453,7 +470,7 @@ const Player = () => {
                     <div className={request === "video" ? "active videoContentHolder" : " inactive"}> <Video></Video> </div>
                     <div className={request === "lyrics" ? "active lyricsContentHolder" : "inactive"} id="lyricsholder">
                         {
-                            lyrics.map((line: any) => {
+                            lyrics?.map((line: any) => {
                                 return <div className={`lyriclineholder ${(audioProgress >= line[0] && line[1] > audioProgress) ? "lyriclineactive" : "lyriclineinactive"}`}
                                     id={`${(audioProgress >= line[0] && line[1] > audioProgress) ? "active" : "inactive"}`}
                                     style={{
@@ -473,9 +490,9 @@ const Player = () => {
                         <div className='queuecontents'>
 
                             {
-                                songslist?.map((item: any, index:number) => {
+                                songslist?.map((item: any, index: number) => {
                                     return <div className='queueitem' style={{
-                                        opacity:songIndex===index ? "0.5" :"1"
+                                        opacity: songIndex === index ? "0.5" : "1"
                                     }}>
                                         {/* {index+1} */}
                                         <img src={item.img} alt="" />
