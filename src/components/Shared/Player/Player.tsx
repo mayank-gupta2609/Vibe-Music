@@ -19,13 +19,15 @@ const Player = () => {
     const [vState, setVState] = useState<string>("pause")
     const [liked, setLiked_] = useState<boolean>(false)
     const dispatch = useDispatch()
+    const [audDuration, setAudDuration] = useState<string>("0:00")
+    const [audprog, setAudProg_] = useState<string>("0:00")
     // const [op, setOp] = useState("addto")
     // const [method, setMethod] = useState("post")
     const operation = useRef("addto")
     const method = useRef("post")
     const userlike = useRef(false)
     const indexRef = useRef(songIndex)
-    const [lyrics, setLyrics] = useState<[string]>() 
+    const [lyrics, setLyrics] = useState<[string]>()
     // const { audio } = useSelector((state:any) => state.user)
     // const [like, setLike] = useState<any[]>([])
     // const [likedSongsList, setLikedSongsList] = useState<any[]>([]);
@@ -174,6 +176,7 @@ const Player = () => {
 
 
 
+
     const toggleAudioState = () => {
         let audio = document.getElementById('audioplayer') as HTMLAudioElement
         const a: HTMLAudioElement = audio!;
@@ -200,12 +203,12 @@ const Player = () => {
         setExpand(!expand)
         if (!expand) {
             document.getElementById('playerholder')?.style.setProperty('--player-size', '100%');
-            document.getElementById('additionalContent')?.style.setProperty('--add-content-visibility', 'visible');
+            document.getElementById('additionalContent')?.style.setProperty('--add-content-opacity', '1');
 
         }
         else {
             document.getElementById('playerholder')?.style.setProperty('--player-size', '16%');
-            document.getElementById('additionalContent')?.style.setProperty('--add-content-visibility', 'hidden');
+            document.getElementById('additionalContent')?.style.setProperty('--add-content-opacity', '0');
 
         }
     }
@@ -294,7 +297,7 @@ const Player = () => {
     // }
 
     const getSongLyrics = async () => {
-        let headersList = { 
+        let headersList = {
             "Content-Type": "application/json"
         }
 
@@ -309,6 +312,22 @@ const Player = () => {
 
     }
 
+    const changeDuration = (e: any) => {
+        let song = document.getElementById('audioplayer') as HTMLAudioElement
+        const a: HTMLAudioElement = song!;
+        const audioprog = document.getElementById('audioprogressbar')!
+        const audprogindicator = document.getElementById('audprogindicator')
+        // console.log(audioprog?.offsetLeft)
+        // console.log(audprogindicator?.clientLeft)
+        let x = audioprog?.getClientRects()!
+        console.log(x[0].left)
+        console.log((Math.abs(e.clientX - x[0].left) / audioprog?.clientWidth) * 100)
+        // var percent = e.offsetX / this.offsetWidth;
+        let time = (Math.abs(e.clientX - x[0].left) / audioprog?.clientWidth)
+        a.currentTime = a.duration * time
+        document.getElementById('audprogindicator')?.style.setProperty('--progress-width', (time * 100).toString() + "%");
+    }
+
     React.useEffect(() => {
         updateHistory()
     }, [audio])
@@ -319,7 +338,11 @@ const Player = () => {
         // checkLike()
         let song = document.getElementById('audioplayer') as HTMLAudioElement
         const a: HTMLAudioElement = song!;
-        document.title = "Swift Music • " + audio?.name
+        if (a) {
+            setAudDuration(Math.floor(a?.duration / 60) + ':' + ('0' + Math.floor(a?.duration % 60)).slice(-2))
+        } else {
+            setAudDuration("0:00")
+        }
 
         if (a?.paused) setAState("play")
         else setAState("pause")
@@ -328,8 +351,9 @@ const Player = () => {
             let time = a.currentTime / a.duration
             setAudioProgress(Math.floor(a.currentTime))
             document.getElementById('audprogindicator')?.style.setProperty('--progress-width', (time * 100).toString() + "%");
+            setAudProg_(Math.floor(a.currentTime / 60) + ':' + ('0' + Math.floor(a.currentTime % 60)).slice(-2))
             // if (expand === false) {
-
+            // console.log(Math.floor(a.currentTime / 60) + ':' + ('0' + Math.floor(a.currentTime % 60)).slice(-2))
             document.getElementById('active')?.scrollIntoView({
                 behavior: 'smooth',
                 block: 'center',
@@ -345,6 +369,7 @@ const Player = () => {
             setAState("pause")
         })
 
+        // a.removeEventListener();
 
     }, [])
 
@@ -360,15 +385,43 @@ const Player = () => {
     // }, [liked])
 
     React.useEffect(() => {
+        let song = document.getElementById('audioplayer') as HTMLAudioElement
+        const a: HTMLAudioElement = song!;
+        // if (a) {
+        let url = " url(" + audio?.img + ")"
+        document.getElementById("audioContentContainer")?.style.setProperty("--background-image-url", url)
+        document.getElementById("lyricContentContainer")?.style.setProperty("--background-image-url", url)
+
+        a.addEventListener('loadeddata', () => {
+
+            setAudDuration(Math.floor(a?.duration / 60) + ':' + ('0' + Math.floor(a?.duration % 60)).slice(-2))
+            // console.log(a.duration)
+        })
+        // console.log(Math.floor(a?.duration / 60) + ':' + ('0' + Math.floor(a?.duration % 60)).slice(-2))
+
         // if (likedsongs?.includes(audio?._id) === true) {
         //     setLiked_(true)
         // }
         // console.log(likedsongs?.includes(audio?._id))
+        // let song = document.getElementById('audioplayer') as HTMLAudioElement
+        // const a: HTMLAudioElement = song!;
+        // if (a) {
+        //     setAudDuration(Math.floor(a?.duration / 60) + ':' + ('0' + Math.floor(a?.duration % 60)).slice(-2))
+        // } else {
+        //     setAudDuration("0:00")
+        // }
         getSongLyrics()
         checkLike()
     }, [audio])
 
     React.useEffect(() => {
+        // let song = document.getElementById('audioplayer') as HTMLAudioElement
+        // const a: HTMLAudioElement = song!;
+        // if (a!=null) {
+        //     setAudDuration(Math.floor(a?.duration / 60) + ':' + ('0' + Math.floor(a?.duration % 60)).slice(-2))
+        // } else {
+        setAudDuration("0:00")
+        // }
         dispatch(setSongIndex(0))
     }, [])
 
@@ -430,13 +483,18 @@ const Player = () => {
                                 }} ></i>
                         </div>
                     </div>
-                    <audio src={audio ? audio.location : ''} autoPlay loop preload="auto" id="audioplayer" controls={false}></audio>
+                    <audio src={audio ? audio.location : ''} autoPlay loop preload="metadata" id="audioplayer" controls={false}></audio>
                     <div className="audioprogressbarholder">
-                        <div className="audioprogressbar">
-                            <div className="audioprogressindicator" id="audprogindicator">
+                        {audprog}
+                        <div className="audioprogressbar" id="audioprogressbar" onClick={(e: any) => {
+                            changeDuration(e)
+                        }}>
 
+                            <div className="audioprogressindicator" id="audprogindicator">
                             </div>
+
                         </div>
+                        {audDuration}
                     </div>
                 </div>
             </div>
@@ -445,20 +503,23 @@ const Player = () => {
                     <div className={`additionalContentOptions ${request === "audio" ? "addContentOptionActive" : ""}`} onClick={() => {
                         setRequest("audio")
                         VideoToAudio()
-                    }}>Audio</div>
+                    }}><i className="fa-solid fa-music"></i></div>
                     <div className={`additionalContentOptions ${request === "video" ? "addContentOptionActive" : ""}`} onClick={() => {
                         setRequest("video")
                         AudioToVideo()
-                    }}>Video</div>
+                    }}><i className="fa-solid fa-video"></i></div>
                     <div className={`additionalContentOptions ${request === "lyrics" ? "addContentOptionActive" : ""}`} onClick={() => {
                         setRequest("lyrics")
-                    }}>Lyrics</div>
+                    }}><i className="fa-solid fa-align-center fa-rotate-90"></i></div>
                     <div className={`additionalContentOptions ${request === "queue" ? "addContentOptionActive" : ""}`} onClick={() => {
                         setRequest("queue")
-                    }}>Queue</div>
+                    }}><i className="fa-solid fa-bars-staggered"></i></div>
                 </div>
                 <div className="additionalContentHolder">
                     <div className={request === "audio" ? "active audioContentHolder" : " inactive"}>
+                        <div className="audioContentContainer" id="audioContentContainer">
+
+                        </div>
                         <div className="audiocontentalbumpic">
                             <img src={audio?.img} height="100%" width="100%" alt="" />
                         </div>
@@ -469,16 +530,22 @@ const Player = () => {
                     </div>
                     <div className={request === "video" ? "active videoContentHolder" : " inactive"}> <Video></Video> </div>
                     <div className={request === "lyrics" ? "active lyricsContentHolder" : "inactive"} id="lyricsholder">
-                        {
-                            lyrics?.map((line: any) => {
-                                return <div className={`lyriclineholder ${(audioProgress >= line[0] && line[1] > audioProgress) ? "lyriclineactive" : "lyriclineinactive"}`}
-                                    id={`${(audioProgress >= line[0] && line[1] > audioProgress) ? "active" : "inactive"}`}
-                                    style={{
-                                        color: audioProgress > line[1] ? "#B9FFF8" : ""
-                                    }}
-                                >{line[2]}</div>
-                            })
-                        }
+                        <div className="lyricContentContainer" id="lyricContentContainer">
+
+                        </div>
+                        <div className="lyricsline">
+
+                            {
+                                lyrics?.map((line: any) => {
+                                    return <div className={`lyriclineholder ${(audioProgress >= line[0] && line[1] > audioProgress) ? "lyriclineactive" : "lyriclineinactive"}`}
+                                        id={`${(audioProgress >= line[0] && line[1] > audioProgress) ? "active" : "inactive"}`}
+                                        style={{
+                                            color: audioProgress > line[1] ? "#B9FFF8" : ""
+                                        }}
+                                    >{line[2]}</div>
+                                })
+                            }
+                        </div>
                         {/* <div className={`lyriclineholder ${(audioProgress >= 0 && audioProgress < 10) ? "lyriclineactive" : "lyriclineinactive"}`} id="15">Line 1</div>
                         <div className={`lyriclineholder ${(audioProgress >= 10 && audioProgress < 15) ? "lyriclineactive" : "lyriclineinactive"}`} id="20">line2</div>
                         <div className={`lyriclineholder ${(audioProgress >= 15 && audioProgress < 20) ? "lyriclineactive" : "lyriclineinactive"}`} id="">line3</div>

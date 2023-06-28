@@ -17,8 +17,9 @@ const SongCard = (props: {
     const handleClick = () => {
         dispatch(setAudio(props.song))
         dispatch(setSongIndex(props.index))
-        let song = document.getElementById('audioplayer') as HTMLAudioElement
-        const a: HTMLAudioElement = song!;
+        // let song = document.getElementById('audioplayer') as HTMLAudioElement
+        // const a: HTMLAudioElement = song!;
+        // console.log(`url(${audio?.img})`)
         // const storage = getStorage();
         // const audRef = ref(storage, `${props.song.audsrc}` + ".mp3");
         // console.log(audRef)
