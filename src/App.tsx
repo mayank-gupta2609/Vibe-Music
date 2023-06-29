@@ -31,8 +31,8 @@ const App = () => {
       authtoken:data.authtoken
     }
     dispatch(setUser(user))
-    // console.log(data);
-    // localStorage.setItem("authtoken", data.authtoken)
+    console.log(data.authtoken);
+    localStorage.setItem("authtoken", data.authtoken)
     setLoading(false)
 
   }

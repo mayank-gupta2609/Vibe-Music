@@ -177,7 +177,7 @@ const Player = () => {
             setRequest("video")
         }
 
-        if (request === "lyrics") {
+        if (request === "lyrics" || request === "queue") {
             setRequest("video")
             a.pause();
             v.currentTime = a.currentTime
@@ -199,7 +199,7 @@ const Player = () => {
             setRequest("audio")
         }
 
-        if (request === "lyrics") {
+        if (request === "lyrics"|| request === "queue") {
             setRequest("audio")
         }
     }
@@ -553,6 +553,9 @@ const Player = () => {
                                 songslist?.map((item: any, index: number) => {
                                     return <div className='queueitem' style={{
                                         opacity: songIndex === index ? "0.5" : "1"
+                                    }} key={item._id} onClick={()=>{
+                                        dispatch(setAudio(item))
+                                        dispatch(setSongIndex(index))
                                     }}>
                                         <img src={item.img} alt="" height="80%" />
                                         <div className="queueitemdetials">
