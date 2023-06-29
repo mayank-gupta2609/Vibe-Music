@@ -20,10 +20,10 @@ const Login = () => {
 
     let token = "";
     const loginRequest = async (e: Event) => {
-        console.log(document.cookie)
+        //console.log(document.cookie)
         e.preventDefault();
-        console.log(email)
-        console.log(password)
+        //console.log(email)
+        //console.log(password)
         const resposnse = await fetch("http://localhost:5000/api/auth/login", {
             method: 'POST',
             headers: {
@@ -36,7 +36,7 @@ const Login = () => {
         });
 
         const json = await resposnse.json();
-        console.log(json)
+        //console.log(json)
         if (json.success) {
             token = json.authtoken;
             localStorage.setItem('authtoken', token);
@@ -45,8 +45,8 @@ const Login = () => {
                 uname: json.uname
             }
             dispatch(setUser(user))
-            console.log(json)
-            // console.log(playlists) 
+            //console.log(json)
+            // //console.log(playlists) 
 
 
         }
@@ -66,13 +66,13 @@ const Login = () => {
         });
 
         const json = await resposnse.json();
-        console.log(json)
+        //console.log(json)
         let uid
         if (json.authtoken) {
             token = json.authtoken;
             localStorage.setItem('authtoken', token);
             uid = json.user._id;
-            console.log(json.user._id)
+            //console.log(json.user._id)
             dispatch(setUser(json))
         }
 

@@ -3,7 +3,7 @@ import "./Sidebar.css"
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
 import { db } from '../../../firebaseConfig'
 import { useDispatch, useSelector } from 'react-redux'
-import { setAudio, setLikedsongs, setLikesList } from '../../../redux/features/userSlice'
+import { setAudio, setLikedsongs, setLikesList, setSongIndex, setSongsList, setTracklist } from '../../../redux/features/userSlice'
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom'
 import MusicItemloader from '../Loader/MusicItemloader'
@@ -19,7 +19,7 @@ const Sidebar = () => {
   const [likedsongslist, setlikedsongslist] = React.useState([])
   const location = useLocation();
   const [itemloading, setItemLoading] = React.useState<boolean>(true)
-
+  const [name, setName] = React.useState<string>("")
   const getLikedSongs = async () => {
     setItemLoading(true)
     let headersList = {
@@ -35,9 +35,9 @@ const Sidebar = () => {
     dispatch(setLikedsongs(data.ids));
     dispatch(setLikesList(data.songs));
     setlikedsongslist(data.songs)
-    console.log(data)
+    //console.log(data)
     setLikes(data.songs)
-    console.log(data.ids);
+    //console.log(data.ids);
     setItemLoading(false)
   }
 
@@ -55,7 +55,7 @@ const Sidebar = () => {
     let data = await response.json();
 
 
-    console.log(data)
+    //console.log(data)
     // setHid(data.history[0]._id)
     setHistory(data.songs)
 
@@ -63,12 +63,35 @@ const Sidebar = () => {
 
   }
 
+  const addPlaylist = async (e: any) => {
+    e.preventDefault();
+    let headersList = {
+      "Content-Type": "application/json",
+      "auth-token": user.authtoken
+    }
+
+    let bodyContent = JSON.stringify({
+      "name": name,
+      "track": []
+    });
+
+    let response = await fetch("http://localhost:5000/api/playlists/addplaylist", {
+      method: "POST",
+      body: bodyContent,
+      headers: headersList
+    });
+
+    let data = await response.json();
+    console.log(data);
+    getPlaylists()
+  }
+
   const authtoken: string = localStorage.getItem('authtoken')!
   const getPlaylists = async () => {
-    // console.log(user.authtoken)
+    // //console.log(user.authtoken)
     // setLoading(true)
     let headersList = {
-      "auth-token": authtoken
+      "auth-token": user.authtoken
     }
 
     let response = await fetch(`http://localhost:5000/api/playlists/getallplaylists/${user?.uid}`, {
@@ -79,7 +102,7 @@ const Sidebar = () => {
 
     let data = await response.json();
 
-    console.log(data);
+    //console.log(data);
     setPlaylist(data)
     // setLoading(false)
 
@@ -126,10 +149,13 @@ const Sidebar = () => {
 
 
             {request === "likes" && (likeslist?.length > 0 ?
-              likeslist?.map((m: any) => {
+              likeslist?.map((m: any, index: number) => {
                 return <div className="musicItem" key={m?._id} onClick={() => {
                   dispatch(setAudio(m))
-                }}>
+                  dispatch(setSongsList(likeslist))
+                  dispatch(setSongIndex(index))
+                }}
+                >
                   <img src={m?.img} height="100%" alt="" />
 
                   <div className="musicItemMusicDetails">
@@ -179,24 +205,36 @@ const Sidebar = () => {
             }
 
             {request === "playlist" &&
-              <div>
+              <div className="playlists">
                 <i className="fa-solid fa-arrows-rotate refresh" onClick={() => {
                   getPlaylists()
                 }}></i>
-                {playlist.length > 0 ? playlist?.map((m: any) => {
-                  return <div className="musicItem">
-                    <Link className="text-link" to={`/playlist/${m._id}`}>
-                      <div className="musicItemMusicDetails">
-                        <div className="musicItemMusicName">
-                          {m?.name}
+                <div className="playlistscontent">
+
+                  {playlist.length > 0 ? playlist?.map((m: any) => {
+                    return <div className="musicItem">
+                      <Link className="text-link" to={`/playlist/${m._id}`}>
+                        <div className="musicItemMusicDetails">
+                          <div className="musicItemMusicName">
+                            {m?.name}
+                          </div>
+                          <div className="musicItemArtistDiv">
+                            {m?.tracks.length} songs
+                          </div>
                         </div>
-                        <div className="musicItemArtistDiv">
-                          {m?.tracks.length} songs
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                }) : <div className="infomsg">No Playlists to show</div>}
+                      </Link>
+                    </div>
+                  }) : <div className="infomsg">No Playlists to show</div>}
+                </div>
+                <form onSubmit={(e: any) => {
+                  addPlaylist(e)
+                }} >
+
+                  <input type="text" className="addplaylist" placeholder='Add a Playlist' value={name} onChange={(e: any) => {
+                    setName(e.target.value);
+                  }}
+                  />
+                </form>
               </div>
 
             }

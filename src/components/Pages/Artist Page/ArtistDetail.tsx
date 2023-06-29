@@ -6,12 +6,12 @@ const ArtistDetail = () => {
     const [albums, setalbums] = useState<any>([])
     const [songs, setSongs] = useState<any>([])
     const { id } = useParams()
-    const { artist, artistname } = useSelector((state:any) => state.artist) 
+    const { artist, artistname } = useSelector((state: any) => state.artist)
 
-    console.log(artistname)
-    console.log(id)
+    //console.log(artistname)
+    //console.log(id)
 
-    const getArtistDetails = async () => { 
+    const getArtistDetails = async () => {
         let headersList = {
             "Accept": "*/*",
             "User-Agent": "Thunder Client (https://www.thunderclient.com)",
@@ -24,11 +24,11 @@ const ArtistDetail = () => {
         });
 
         let data = await response.json();
-        console.log(data);
-        // console.log(data[0]?.albums) 
+        //console.log(data);
+        // //console.log(data[0]?.albums) 
         setalbums(data[0]?.albums)
         setSongs(data[0]?.songs)
-        console.log(data?.a); 
+        //console.log(data?.a); 
     }
 
     useEffect(() => {
@@ -36,9 +36,9 @@ const ArtistDetail = () => {
         const div = document.getElementById('artist-detail')
         // const add = document.getElementById("additionalTab")
         div?.addEventListener("scroll", () => {
-            // console.log(div.scrollTop)
+            // //console.log(div.scrollTop)
             let t: number = div.scrollTop / 220
-            // console.log(t)
+            // //console.log(t)
             document.getElementById("headerholder")?.style.setProperty("--alpha", t.toString())
             document.getElementById("additionalTab")?.style.setProperty("--opacity", t.toString())
             // document.getElementById("additionalTab")?.setInnerHTML = <p>{artistname}</p>
@@ -48,7 +48,7 @@ const ArtistDetail = () => {
 
     }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         getArtistDetails()
     }, [])
 

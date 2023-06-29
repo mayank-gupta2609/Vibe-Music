@@ -9,45 +9,25 @@ import { setAudio, setLiked, setLikedsongs, setLikesList, setSong, setSongIndex 
 
 const Player = () => {
 
-    const { audio, likedsongs, songIndex, tracklist, songslist } = useSelector((state: any) => state.user)
+    const { audio, likedsongs, songIndex, songslist } = useSelector((state: any) => state.user)
     const { user, likeslist } = useSelector((state: any) => state.user)
 
     const [request, setRequest] = useState<string>("audio")
-    const [aState, setAState] = useState<string>("pause")
+    const [medState, setMedState] = useState<string>("pause")
     const [audioProgress, setAudioProgress] = useState<number>(0)
     const [expand, setExpand] = useState<boolean>(false)
-    const [vState, setVState] = useState<string>("pause")
-    const [liked, setLiked_] = useState<boolean>(false)
     const dispatch = useDispatch()
-    const [audDuration, setAudDuration] = useState<string>("0:00")
-    const [audprog, setAudProg_] = useState<string>("0:00")
-    // const [op, setOp] = useState("addto")
-    // const [method, setMethod] = useState("post")
+    const [mediaDuration, setMediaDuration] = useState<string>("0:00")
+    const [mediaProgress, setmediaProgress_] = useState<string>("0:00")
     const operation = useRef("addto")
     const method = useRef("post")
     const userlike = useRef(false)
-    const indexRef = useRef(songIndex)
+    // const indexRef = useRef(songIndex)
     const [lyrics, setLyrics] = useState<[string]>()
-    // const { audio } = useSelector((state:any) => state.user)
-    // const [like, setLike] = useState<any[]>([])
-    // const [likedSongsList, setLikedSongsList] = useState<any[]>([]);
-    // console.log(likedsongs)
-    // console.log(likeslist)
-    // const handleLikedClick = async () => {
-    //     // const likedRef = doc(db, "Likes", user.username);
-
-    //     // console.log(liked)
-    //     // if (liked) {
-    //     //     console.log(audio.name)
-    //     //     await updateDoc(likedRef, {
-    //     //         likes: arrayUnion(...[audio.id])
-    //     //     });
-    //     // } else {
-    //     //     await updateDoc(likedRef, {
-    //     //         likes: arrayRemove(audio.name)
-    //     //     });
-    //     // }
-    // }
+    let audio1 = document.getElementById('audioplayer') as HTMLAudioElement
+    const a: HTMLAudioElement = audio1!;
+    let video = document.getElementById('mainVideo') as HTMLVideoElement
+    const v: HTMLVideoElement = video;
 
     const checkLike = async () => {
         let headersList = {
@@ -65,50 +45,37 @@ const Player = () => {
         });
 
         let data = await response.json();
-        console.log(data)
+        //console.log(data)
         // setUserlike((prevstate:any) => data)
         userlike.current = data
-        console.log(userlike);
+        //console.log(userlike);
 
     }
 
 
     const handleLikedClick = async () => {
-        console.log(likedsongs)
+        //console.log(likedsongs)
         try {
             if (userlike.current === true) {
-                // console.log("object")
-                // setOp("deletefrom")
-                // setMethod("delete")
                 operation.current = "deletefrom"
                 method.current = "delete"
-                console.log("dele")
-                // setLiked_(false)
-                // newlist = likedsongs.filter((item: any) => item != audio._id)
 
             } else {
-
-                // setMethod("post")
-                // setOp("addto")
                 operation.current = "addto"
                 method.current = "post"
-                console.log("add")
-                // dispatch(setLikedsongs([...likedsongs.filter((item: any) => item != audio._id), audio.id]))
-                // dispatch(setLikesList([...likeslist.filter((item: any) => item.id != audio._id), audio]))
-                // newlist = newlist.concat(audio?._id)
             }
 
             let headersList = {
                 "Content-Type": "application/json"
             }
 
-            console.log(audio)
+            //console.log(audio)
             let bodyContent = JSON.stringify({
                 "_id": audio?._id,
                 "userid": user.uid
             });
 
-            console.log(user)
+            //console.log(user)
             let response = await fetch(`http://localhost:5000/api/likedsongs/${operation.current}likedsongs/${user?.uid}`, {
                 method: method.current,
                 body: bodyContent,
@@ -116,87 +83,69 @@ const Player = () => {
             });
 
             let data = await response.json();
-            console.log(data);
+            //console.log(data);
 
             if (data.success) {
                 userlike.current = !userlike.current;
-                console.log("object")
-                console.log(userlike)
                 if (userlike.current) {
-                    console.log("1")
+                    //console.log("1")
                     const newlist = [...likedsongs, audio?._id]
                     const songlist = [...likeslist, audio]
-                    console.log(newlist);
-                    // setUserlike(false)
                     dispatch(setLikedsongs(newlist));
                     dispatch(setLikesList(songlist));
-                    console.log(likedsongs);
-                    // dispatch(setLikedsongs((prevState: any) => prevState.concat(audio?._id)));
                 }
                 else {
-                    console.log("2")
+                    //console.log("2")
                     const newlist = likedsongs.filter((item: any) => item != audio?._id)
                     const songlist = likeslist.filter((item: any) => item._id != audio?._id)
-                    console.log(newlist);
+                    //console.log(newlist);
                     dispatch(setLikedsongs(newlist));
                     dispatch(setLikesList(songlist));
-                    console.log(likedsongs);
-                    // setUserlike(true)
-                    // dispatch(setLikedsongs(newlist));
                 }
             }
-            setLiked_(false)
-            // setLike("solid")
-            // dispatch(setLiked(false))
-            // setLike(like => [...like, audio.id])
-            // console.log(like)
-            // dispatch(setLikesList(data.songs))
-            // likedsongs.push(audio._id)
-            // setLikedSongsList(likedsongs)
+            // setLiked_(false)
         } catch (error) {
-            console.log(error)
+            //console.log(error)
         }
-        // console.log(likedsongs)
-        // console.log(likeslist)
+        // //console.log(likedsongs)
+        // //console.log(likeslist)
     }
 
-    // if (a.currentTime > 0 && !a.paused) {
-    //     console.log("1")
-    //     a.pause();
-    //     setAState("pause")
-    //     // return
-    // }
+    const toggleMediaState = () => {
+        if (request === "audio" || request === "lyrics") {
+            if (a?.currentTime >= 0 && a?.paused) {
+                a.play();
+                setMedState("play")
+                return;
+            }
 
-    // if (a.currentTime == 0 || a.paused) {
-    //     setAState("play")
-    //     a.play()
-    //     
-    //     })
-    // }
-
-
-
-
-    const toggleAudioState = () => {
-        let audio = document.getElementById('audioplayer') as HTMLAudioElement
-        const a: HTMLAudioElement = audio!;
-        console.log("5")
-
-
-
-        if (a?.currentTime >= 0 && a?.paused) {
-            console.log("1")
-            a.play();
-            setAState("play")
-            return;
+            if (a?.currentTime > 0 && !a?.paused) {
+                a.pause();
+                setMedState("pause")
+                return;
+            }
         }
 
-        if (a?.currentTime > 0 && !a?.paused) {
-            console.log("2")
-            a.pause();
-            setAState("pause")
-            return;
+        if (request === "video") {
+            if (v?.currentTime >= 0 && v?.paused) {
+                v.play();
+                setMedState("play")
+                return;
+            }
+
+            if (v?.currentTime > 0 && !v?.paused) {
+                //console.log("2")
+                v.pause();
+                setMedState("pause")
+                return;
+            }
         }
+
+        // if(request === "lyrics"){
+
+        // }
+
+
     }
 
     const handleClick = () => {
@@ -214,38 +163,45 @@ const Player = () => {
     }
 
     const AudioToVideo = () => {
-        let audio_ = document.getElementById('audioplayer') as HTMLAudioElement
-        let video = document.getElementById('mainVideo') as HTMLVideoElement
-        let video_ = document.getElementById('backVideo') as HTMLVideoElement
-        document.getElementById('audiocontrols')?.style.setProperty('--pointer', 'no-drop');
-        document.getElementById('audiocontrols')?.style.setProperty('--bg-color', 'rgb(27 27 27)');
-        const a: HTMLAudioElement = audio_;
-        const v: HTMLVideoElement = video;
-        const v_: HTMLVideoElement = video_;
-        v.src = audio.location.replace('audio', 'video').replace('mp3', 'mp4')
-        v_.src = audio.location.replace('audio', 'video').replace('mp3', 'mp4')
-        setVState("play")
-        setAState("pause")
-        v.currentTime = a.currentTime;
-        v_.currentTime = a.currentTime;
-        v.play();
-        a.pause();
-        v_.play()
+        if (request === "audio") {
+            // let audio1_ = document.getElementById('audioplayer') as HTMLAudioElement
+            // const v: HTMLVideoElement = video;
+            // const a: HTMLAudioElement = audio1_;
+            v.src = audio?.location.replace('audio', 'video').replace('mp3', 'mp4')
+            // setVState("play")
+            // setMedState("pause")
+            setMedState("play")
+            v.currentTime = a.currentTime;
+            v.play();
+            a.pause();
+            setRequest("video")
+        }
+
+        if (request === "lyrics") {
+            setRequest("video")
+            a.pause();
+            v.currentTime = a.currentTime
+            v.play()
+        }
+
     }
 
     const VideoToAudio = () => {
-        let audio = document.getElementById('audioplayer') as HTMLAudioElement
-        let video = document.getElementById('mainVideo') as HTMLVideoElement
-        let video_ = document.getElementById('backVideo') as HTMLVideoElement
-        document.getElementById('audiocontrols')?.style.setProperty('--pointer', '');
-        document.getElementById('audiocontrols')?.style.setProperty('--bg-color', 'rgb(27 27 27)');
-        const a: HTMLAudioElement = audio!;
-        const v: HTMLVideoElement = video!;
-        const v_: HTMLVideoElement = video_!;
-        a.currentTime = v_.currentTime
-        a.play();
-        v.pause();
-        v_.pause();
+        if (request === "video") {
+            let audio1 = document.getElementById('audioplayer') as HTMLAudioElement
+            const a: HTMLAudioElement = audio1!;
+            const v: HTMLVideoElement = video!;
+            // const v_: HTMLVideoElement = video_!;
+            v?.pause();
+            a.currentTime = v.currentTime
+            a.play();
+            setMedState("play")
+            setRequest("audio")
+        }
+
+        if (request === "lyrics") {
+            setRequest("audio")
+        }
     }
 
     const updateHistory = async () => {
@@ -264,12 +220,12 @@ const Player = () => {
         });
 
         let data = await response.json();
-        console.log(data);
+        //console.log(data);
     }
 
     // const handleLikeClick = async () => {
     //     dispatch(setLiked(true))
-    //     if (likedsongs.includes(audio._id)) {
+    //     if (likedsongs.includes(audio?._id)) {
     //         setOp("deletefrom")
     //         setMethod("delete")
     //     } else {
@@ -281,7 +237,7 @@ const Player = () => {
     //     }
 
     //     let bodyContent = JSON.stringify({
-    //         "track": audio.name
+    //         "track": audio?.name
     //     });
 
     //     let response = await fetch(`http://localhost:5000/api/likedsongs/${op}likedsongs/${user.uid}`, {
@@ -291,7 +247,7 @@ const Player = () => {
     //     });
 
     //     let data = await response.json();
-    //     console.log(data);
+    //     //console.log(data);
     //     // setLike("solid")
     //     dispatch(setLiked(false))
     // }
@@ -308,120 +264,138 @@ const Player = () => {
 
         let data = await response.json();
         setLyrics(data?.lyricContent)
-        console.log(data);
+        //console.log(data);
 
     }
 
     const changeDuration = (e: any) => {
-        let song = document.getElementById('audioplayer') as HTMLAudioElement
-        const a: HTMLAudioElement = song!;
         const audioprog = document.getElementById('audioprogressbar')!
-        const audprogindicator = document.getElementById('audprogindicator')
-        // console.log(audioprog?.offsetLeft)
-        // console.log(audprogindicator?.clientLeft)
         let x = audioprog?.getClientRects()!
-        console.log(x[0].left)
-        console.log((Math.abs(e.clientX - x[0].left) / audioprog?.clientWidth) * 100)
-        // var percent = e.offsetX / this.offsetWidth;
         let time = (Math.abs(e.clientX - x[0].left) / audioprog?.clientWidth)
-        a.currentTime = a.duration * time
-        document.getElementById('audprogindicator')?.style.setProperty('--progress-width', (time * 100).toString() + "%");
+
+        if (request === "audio" || request === "lyrics") {
+            a.currentTime = a.duration * time
+            document.getElementById('mediaProgressindicator')?.style.setProperty('--progress-width', (time * 100).toString() + "%");
+        } else if (request === "video") {
+            let video_ = document.getElementById('mainVideo') as HTMLVideoElement
+            const v: HTMLAudioElement = video_!;
+            v.currentTime = v.duration * time
+            document.getElementById('mediaProgressindicator')?.style.setProperty('--progress-width', (time * 100).toString() + "%");
+        }
     }
 
     React.useEffect(() => {
-        updateHistory()
+
+        if (v) {
+            v.src = audio?.location.replace('audio', 'video').replace('mp3', 'mp4')
+        }
+        if (request === "video") {
+
+            v.play()
+            a.pause()
+            a.currentTime = 0
+        }
+
+        if (audio) {
+            updateHistory()
+        }
     }, [audio])
 
 
     React.useEffect(() => {
-        // setLiked(false)
-        // checkLike()
-        let song = document.getElementById('audioplayer') as HTMLAudioElement
-        const a: HTMLAudioElement = song!;
-        if (a) {
-            setAudDuration(Math.floor(a?.duration / 60) + ':' + ('0' + Math.floor(a?.duration % 60)).slice(-2))
-        } else {
-            setAudDuration("0:00")
-        }
+        if (audio) {
 
-        if (a?.paused) setAState("play")
-        else setAState("pause")
+            if (a) {
+                a?.addEventListener('loadeddata', () => {
 
-        a?.addEventListener('timeupdate', () => {
-            let time = a.currentTime / a.duration
-            setAudioProgress(Math.floor(a.currentTime))
-            document.getElementById('audprogindicator')?.style.setProperty('--progress-width', (time * 100).toString() + "%");
-            setAudProg_(Math.floor(a.currentTime / 60) + ':' + ('0' + Math.floor(a.currentTime % 60)).slice(-2))
-            // if (expand === false) {
-            // console.log(Math.floor(a.currentTime / 60) + ':' + ('0' + Math.floor(a.currentTime % 60)).slice(-2))
-            document.getElementById('active')?.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-                inline: 'center'
+                    setMediaDuration(Math.floor(a?.duration / 60) + ':' + ('0' + Math.floor(a?.duration % 60)).slice(-2))
+
+                })
+                // setMediaDuration(Math.floor(a?.duration / 60) + ':' + ('0' + Math.floor(a?.duration % 60)).slice(-2))
+            } else {
+                setMediaDuration("0:00")
+            }
+
+            if (a?.paused) setMedState("play")
+            else setMedState("pause")
+
+            // if (a) {
+
+            a?.addEventListener("ended", () => {
+                // dispatch(setSongIndex((songIndex + 1)))
+                // dispatch(setAudio(songslist[songIndex + 1]))
             });
+
+            a?.addEventListener('timeupdate', () => {
+                let time = a.currentTime / a.duration
+                setAudioProgress(Math.floor(a.currentTime))
+                document.getElementById('mediaProgressindicator')?.style.setProperty('--progress-width', (time * 100).toString() + "%");
+                setmediaProgress_(Math.floor(a.currentTime / 60) + ':' + ('0' + Math.floor(a.currentTime % 60)).slice(-2))
+                // if (expand === false) {
+                // //console.log(Math.floor(a.currentTime / 60) + ':' + ('0' + Math.floor(a.currentTime % 60)).slice(-2))
+                document.getElementById('active')?.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center',
+                    inline: 'center'
+                });
+                // }
+            })
+
+            v?.addEventListener('timeupdate', () => {
+                let time = v.currentTime / v.duration
+                setAudioProgress(Math.floor(v.currentTime))
+                document.getElementById('mediaProgressindicator')?.style.setProperty('--progress-width', (time * 100).toString() + "%");
+                setmediaProgress_(Math.floor(v.currentTime / 60) + ':' + ('0' + Math.floor(v.currentTime % 60)).slice(-2))
+
+
+            })
+
+            a?.addEventListener('play', () => {
+                setMedState("play")
+            })
+
+            a?.addEventListener('pause', () => {
+                setMedState("pause")
+            })
+
+            v?.addEventListener('play', () => {
+                setMedState("play")
+            })
+
+            v?.addEventListener('pause', () => {
+                setMedState("pause")
+            })
+
             // }
-        })
-        a?.addEventListener('play', () => {
-            setAState("play")
-        })
 
-        a?.addEventListener('pause', () => {
-            setAState("pause")
-        })
-
-        // a.removeEventListener();
-
-    }, [])
-
-
-    // React.useEffect(() => {
-    // setLike(likedsongs)
-
-    // handleLikedClick()
-
-    // return () => {
-    //     setLiked_(false)
-    // }
-    // }, [liked])
-
-    React.useEffect(() => {
-        let song = document.getElementById('audioplayer') as HTMLAudioElement
-        const a: HTMLAudioElement = song!;
-        // if (a) {
+        }
         let url = " url(" + audio?.img + ")"
         document.getElementById("audioContentContainer")?.style.setProperty("--background-image-url", url)
         document.getElementById("lyricContentContainer")?.style.setProperty("--background-image-url", url)
-
-        a.addEventListener('loadeddata', () => {
-
-            setAudDuration(Math.floor(a?.duration / 60) + ':' + ('0' + Math.floor(a?.duration % 60)).slice(-2))
-            // console.log(a.duration)
-        })
-        // console.log(Math.floor(a?.duration / 60) + ':' + ('0' + Math.floor(a?.duration % 60)).slice(-2))
-
-        // if (likedsongs?.includes(audio?._id) === true) {
-        //     setLiked_(true)
-        // }
-        // console.log(likedsongs?.includes(audio?._id))
-        // let song = document.getElementById('audioplayer') as HTMLAudioElement
-        // const a: HTMLAudioElement = song!;
-        // if (a) {
-        //     setAudDuration(Math.floor(a?.duration / 60) + ':' + ('0' + Math.floor(a?.duration % 60)).slice(-2))
-        // } else {
-        //     setAudDuration("0:00")
-        // }
-        getSongLyrics()
-        checkLike()
+        document.getElementById("queuebackground")?.style.setProperty("--background-image-url", url)
+        if (audio) {
+            getSongLyrics()
+            checkLike()
+        }
     }, [audio])
 
     React.useEffect(() => {
-        // let song = document.getElementById('audioplayer') as HTMLAudioElement
-        // const a: HTMLAudioElement = song!;
-        // if (a!=null) {
-        //     setAudDuration(Math.floor(a?.duration / 60) + ':' + ('0' + Math.floor(a?.duration % 60)).slice(-2))
-        // } else {
-        setAudDuration("0:00")
-        // }
+        if (request === "video") {
+            v?.addEventListener("loadeddata", () => {
+                setMediaDuration(Math.floor(v?.duration / 60) + ':' + ('0' + Math.floor(v?.duration % 60)).slice(-2))
+            })
+        }
+
+        if (request === "audio") {
+            // a?.addEventListener("loadeddata", () => {
+            setMediaDuration(Math.floor(a?.duration / 60) + ':' + ('0' + Math.floor(a?.duration % 60)).slice(-2))
+            // })
+        }
+
+    }, [request])
+
+    React.useEffect(() => {
+        setMediaDuration("0:00")
         dispatch(setSongIndex(0))
     }, [])
 
@@ -429,44 +403,44 @@ const Player = () => {
     return (
         <div className="playerContainer">
             <div className="playerHolder">
-                <div className="albumpic" id="albumpic">
+                {!expand && <div className="albumpic" id="albumpic">
                     {audio && <img src={audio?.img} height="100%" width="100%" alt="" />}
-                </div>
+                </div>}
                 <div className="audiodetails">
                     <div className="musicnameholder">
                         <div className="musicnameaudio">
                             {audio?.name}
                         </div>
                     </div>
-                    <div className="artistsholder">
+                    <div className="auddetailrtistsholder">
                         {audio?.artist.join(",")}
                     </div>
                 </div>
                 <div className="audiocontrols" id="audiocontrols" >
                     <div className="audiocontrolsholder">
                         <div className="audiocontrolsmenu">
-                            <div style={{
-                                pointerEvents: request === "video" ? "none" : "auto"
-                            }} className="audiocontrolsmenu">
+                            <div className="audiocontrolsmenu">
 
                                 <i className="fa-solid fa-backward"
                                     onClick={() => {
                                         // indexRef.current = indexRef.current - 1
-                                        // dispatch(setSongIndex((songIndex-1)))
-                                        // dispatch(setAudio(songslist[songIndex]))
+                                        if (songIndex > 0) {
+
+                                            dispatch(setSongIndex((songIndex - 1)))
+                                            dispatch(setAudio(songslist[songIndex - 1]))
+                                        }
                                     }}
                                 ></i>
-                                <i className={`fa-solid fa-${aState === "pause" ? "play" : "pause"}`} onClick={() => {
-                                    console.log("object")
-                                    toggleAudioState()
+                                <i className={`fa-solid fa-${medState === "pause" ? "play" : "pause"}`} onClick={() => {
+                                    //console.log("object")
+                                    toggleMediaState()
                                 }}></i>
                                 <i className="fa-solid fa-forward"
                                     onClick={() => {
-                                        // console.log(songslist)
-                                        // console.log(songIndex)
-                                        // indexRef.current = indexRef.current + 1
-                                        // dispatch(setSongIndex((songIndex+1)))
-                                        // dispatch(setAudio(songslist[songIndex]))
+                                        if (songIndex < songslist.length - 1) {
+                                            dispatch(setSongIndex((songIndex + 1)))
+                                            dispatch(setAudio(songslist[songIndex + 1]))
+                                        }
                                     }}
                                 ></i>
                             </div>
@@ -478,38 +452,45 @@ const Player = () => {
                                 {`fa-heart fa-${userlike.current ? "solid" : "regular"}`}
                                 // "fa-heart fa-solid"
                                 onClick={() => {
-                                    setLiked_(true)
+                                    // setLiked_(true)
                                     handleLikedClick()
                                 }} ></i>
                         </div>
                     </div>
-                    <audio src={audio ? audio.location : ''} autoPlay loop preload="metadata" id="audioplayer" controls={false}></audio>
+                    <audio src={audio ? audio?.location : ''} autoPlay loop={false} preload="metadata" id="audioplayer" controls={false}></audio>
                     <div className="audioprogressbarholder">
-                        {audprog}
+                        {mediaProgress}
                         <div className="audioprogressbar" id="audioprogressbar" onClick={(e: any) => {
                             changeDuration(e)
                         }}>
 
-                            <div className="audioprogressindicator" id="audprogindicator">
+                            <div className="audioprogressindicator" id="mediaProgressindicator">
                             </div>
 
                         </div>
-                        {audDuration}
+                        {mediaDuration}
                     </div>
                 </div>
             </div>
             <div className="additionalContent" id="additionalContent">
                 <div className="additionalContentOptionHolder">
                     <div className={`additionalContentOptions ${request === "audio" ? "addContentOptionActive" : ""}`} onClick={() => {
-                        setRequest("audio")
                         VideoToAudio()
                     }}><i className="fa-solid fa-music"></i></div>
                     <div className={`additionalContentOptions ${request === "video" ? "addContentOptionActive" : ""}`} onClick={() => {
-                        setRequest("video")
                         AudioToVideo()
                     }}><i className="fa-solid fa-video"></i></div>
                     <div className={`additionalContentOptions ${request === "lyrics" ? "addContentOptionActive" : ""}`} onClick={() => {
+                        if (request == "video") {
+                            //                          
+                            v?.pause()
+                            a.currentTime = v?.currentTime
+                            a?.play()
+                            // 
+                            // 
+                        }
                         setRequest("lyrics")
+                        // if(v.)
                     }}><i className="fa-solid fa-align-center fa-rotate-90"></i></div>
                     <div className={`additionalContentOptions ${request === "queue" ? "addContentOptionActive" : ""}`} onClick={() => {
                         setRequest("queue")
@@ -536,33 +517,44 @@ const Player = () => {
                         <div className="lyricsline">
 
                             {
-                                lyrics?.map((line: any) => {
+                                lyrics?.map((line: any, index: number) => {
                                     return <div className={`lyriclineholder ${(audioProgress >= line[0] && line[1] > audioProgress) ? "lyriclineactive" : "lyriclineinactive"}`}
                                         id={`${(audioProgress >= line[0] && line[1] > audioProgress) ? "active" : "inactive"}`}
                                         style={{
                                             color: audioProgress > line[1] ? "#B9FFF8" : ""
-                                        }}
+                                        }
+
+                                        }
+
+                                        key={index}
+
+                                    // onClick={() => {
+                                    //     let audio1 = document.getElementById('audioplayer') as HTMLAudioElement
+                                    //     const a: HTMLAudioElement = song!;
+                                    //     a.currentTime = line[0]
+                                    // }}
+
                                     >{line[2]}</div>
                                 })
                             }
                         </div>
-                        {/* <div className={`lyriclineholder ${(audioProgress >= 0 && audioProgress < 10) ? "lyriclineactive" : "lyriclineinactive"}`} id="15">Line 1</div>
-                        <div className={`lyriclineholder ${(audioProgress >= 10 && audioProgress < 15) ? "lyriclineactive" : "lyriclineinactive"}`} id="20">line2</div>
-                        <div className={`lyriclineholder ${(audioProgress >= 15 && audioProgress < 20) ? "lyriclineactive" : "lyriclineinactive"}`} id="">line3</div>
-                        <div className={`lyriclineholder ${(audioProgress >= 20 && audioProgress < 40) ? "lyriclineactive" : "lyriclineinactive"}`} id="">line4</div> */}
 
 
                     </div>
                     <div className={request === "queue" ? "active queueContentHolder" : "inactive"}>
-                        <div className='queuecontents'>
+                        {/* <div className='queuecontents'> */}
+                        <div className="queuebackground" id="queuebackground">
+
+                        </div>
+
+                        <div className="queuecontents">
 
                             {
                                 songslist?.map((item: any, index: number) => {
                                     return <div className='queueitem' style={{
                                         opacity: songIndex === index ? "0.5" : "1"
                                     }}>
-                                        {/* {index+1} */}
-                                        <img src={item.img} alt="" />
+                                        <img src={item.img} alt="" height="80%" />
                                         <div className="queueitemdetials">
 
                                             <div className="queueitemname">
@@ -574,7 +566,9 @@ const Player = () => {
                                         </div>
                                     </div>
                                 })
-                            } </div>
+                            }
+                        </div>
+
                     </div>
                 </div>
             </div>

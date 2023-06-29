@@ -3,7 +3,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { setAudio, setSongIndex, setTracklist } from '../../../redux/features/userSlice';
 import { useNavigate } from "react-router";
-import { setArtistName } from "../../../redux/features/artistSlice"; 
+import { setArtistName } from "../../../redux/features/artistSlice";
 
 const SongCard = (props: {
     song: any,
@@ -19,10 +19,10 @@ const SongCard = (props: {
         dispatch(setSongIndex(props.index))
         // let song = document.getElementById('audioplayer') as HTMLAudioElement
         // const a: HTMLAudioElement = song!;
-        // console.log(`url(${audio?.img})`)
+        // //console.log(`url(${audio?.img})`)
         // const storage = getStorage();
         // const audRef = ref(storage, `${props.song.audsrc}` + ".mp3");
-        // console.log(audRef)
+        // //console.log(audRef)
         // getDownloadURL(audRef).then((url: string) =>{
         //     a.pause()
         //     a.src = url;
@@ -34,7 +34,7 @@ const SongCard = (props: {
     }
 
     const handleArtistClick = async (a: any) => {
-        console.log(a)
+        //console.log(a)
         dispatch(setArtistName(a))
         // dispatch(setArtistName(a))
         // navigate(`/artists/${"@" + a.split(" ").join("")}`)
@@ -42,7 +42,7 @@ const SongCard = (props: {
     }
 
     return (
-        <div className="songCard" onClick={()=>{
+        <div className="songCard" onClick={() => {
             props.onClick()
         }}>
             <div className="thumb">

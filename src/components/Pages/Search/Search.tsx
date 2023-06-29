@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './Search.css'
 import SongCard from '../../Shared/SongCard/SongCard'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAudio } from '../../../redux/features/userSlice'
 
 const Search = () => {
   const [songs, setSongs] = useState<any>([])
@@ -9,8 +10,9 @@ const Search = () => {
   const [searchterm, setSearchterm] = useState<string>('')
   const { user, audio, searchedterm } = useSelector((state: any) => state.user)
   const [data, setData] = useState<any>([])
-  console.log(searchedterm)
-  
+  const dispatch = useDispatch()
+  //console.log(searchedterm)
+
   const getArtists = async () => {
 
     let headersList = {
@@ -25,14 +27,14 @@ const Search = () => {
     });
 
     let data = await response.json()
-    console.log(data)
+    //console.log(data)
     setArtists(data)
 
   }
 
   const fetchSearchResults = async () => {
     let headersList = {
-      "auth-token": user.authtoken,
+      "auth-token": localStorage.getItem("auth-token")!,
       "Content-Type": "application/json"
     }
 
@@ -49,7 +51,7 @@ const Search = () => {
     let data = await response.json();
     setData(data)
     // dispatch(setSearcheditems(data))
-    console.log(data);
+    //console.log(data);
   }
 
   useEffect(() => {
@@ -73,8 +75,10 @@ const Search = () => {
         </h1>
 
         <div className="searhcSongHolder">
-          {data.map((song: any) => {
-            return <div className="searchsongcard">
+          {data?.map((song: any) => {
+            return <div className="searchsongcard" onClick={() => {
+              dispatch(setAudio(song))
+            }}>
               <div className="artistdetailholder">
 
                 <div className="artistcontentimg">
@@ -103,8 +107,8 @@ const Search = () => {
           </div>
           <div className="holder">
             {songs.map((song: any, index: number) => {
-              return <SongCard song={song} index={index} onClick={()=>{
-                
+              return <SongCard song={song} index={index} onClick={() => {
+
               }}></SongCard>
             })}
           </div>

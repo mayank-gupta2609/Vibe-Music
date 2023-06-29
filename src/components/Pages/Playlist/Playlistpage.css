@@ -91,15 +91,16 @@ span{
     padding-left:10px;
     font-weight: bold;
     font-family: 'Red Hat Display', sans-serif;
+    /* border:1px solid red */
     
 }
 
 .inputforempltyplaylist{
     width: 100%;
-    /* border:1px solid pink; */
-    margin-top: 10px;
+    /* border:1px solid pink;  */
     height:280px;
     overflow: hidden;
+    padding:40px;
 }
 
 .emptyplaylistholder{

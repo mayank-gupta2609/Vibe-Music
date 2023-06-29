@@ -27,9 +27,9 @@ const Home = () => {
         const div = document.getElementById('home-container')
         // const add = document.getElementById("additionalTab")
         div?.addEventListener("scroll", () => {
-            // console.log(div.scrollTop)
+            // //console.log(div.scrollTop)
             let t: number = div.scrollTop / 150
-            // console.log(t)
+            // //console.log(t)
             document.getElementById("headerholder")?.style.setProperty("--alpha", "1")
             document.getElementById("additionalTab")?.style.setProperty("--opacity", "0")
         })
@@ -41,7 +41,7 @@ const Home = () => {
         setLoading(true)
         let data = await fetch('http://localhost:5000/api/songs/getallsongs');
         let response = await data.json();
-        // console.log(response)
+        // //console.log(response)
         settracks(response);
         setSongs(response)
         setLoading(false)
@@ -65,12 +65,12 @@ const Home = () => {
     }
 
     const updateCurrentSongList = () => {
-        console.log(songs)
+        //console.log(songs)
         dispatch(setSongsList(songs))
-        console.log(songslist)
+        //console.log(songslist)
     }
 
-    console.log(document.cookie)
+    //console.log(document.cookie)
     useEffect(() => {
         getSongs()
     }, [])
@@ -85,11 +85,11 @@ const Home = () => {
             <div className="holder">
                 {
                     loading && <div style={{
-                        display:'flex'
+                        display: 'flex'
                     }}>
-                            <SongCardLoader></SongCardLoader>
-                            <SongCardLoader></SongCardLoader>
-                            <SongCardLoader></SongCardLoader>
+                        <SongCardLoader></SongCardLoader>
+                        <SongCardLoader></SongCardLoader>
+                        <SongCardLoader></SongCardLoader>
                     </div>
                 }
                 {!loading && songs?.map((song: any, index: number) => {

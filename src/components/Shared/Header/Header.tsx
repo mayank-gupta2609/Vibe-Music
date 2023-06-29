@@ -2,20 +2,20 @@ import './Header.css'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
-import { setSearchTerm } from '../../../redux/features/userSlice'
+import { setSearchTerm, setUser } from '../../../redux/features/userSlice'
 
 const Header = () => {
     const [searchterm, setSearchterm] = useState<string>('')
     const { user, audio } = useSelector((state: any) => state.user)
     const { artist, artistname } = useSelector((state: any) => state.artist)
-    
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [data, setData] = useState([])
 
 
 
-    const getItems = async (e:any) => {
+    const getItems = async (e: any) => {
         e.preventDefault()
         // let headersList = {
         //     "auth-token": user.authtoken,
@@ -35,7 +35,7 @@ const Header = () => {
         // let data = await response.json();
         // setData(data)
         // // dispatch(setSearcheditems(data))
-        // console.log(data);
+        // //console.log(data);
         dispatch(setSearchTerm(searchterm))
         navigate("/search")
 
@@ -44,9 +44,9 @@ const Header = () => {
 
     return (
         <div className="headerholder" id="headerholder">
-            <form onSubmit={(e)=>{
+            <form onSubmit={(e) => {
                 getItems(e)
-            }} style={{width:'inherit'}}>
+            }} style={{ width: 'inherit' }}>
 
                 <div className="inputholder">
 
@@ -63,7 +63,10 @@ const Header = () => {
             </div> */}
 
 
-            <div className="usernameholder">
+            <div className="usernameholder" onClick={()=>{
+                localStorage.removeItem("authtoken")
+                dispatch(setUser(null))
+            }}>
                 {user?.uname}
             </div>
         </div>

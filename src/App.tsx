@@ -8,40 +8,40 @@ import Loader from './components/Shared/Loader/Loader';
 
 const App = () => {
 
-  const { user } = useSelector((state: any) => state.user)
+  // const { user } = useSelector((state: any) => state.user)
   const authtoken: string = localStorage.getItem('authtoken')!
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState<boolean>(true)
   const getUser = async () => {
     setLoading(true)
-    let headersList = {
-      "Accept": "*/*",
-      "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+    let headersList = { 
       "auth-token": authtoken
     }
-    
+
     let response = await fetch("http://localhost:5000/api/auth/getuser", {
       method: "POST",
       headers: headersList
     });
-    
+
     let data = await response.json();
     const user = {
-      uid:data.uid,
-      uname:data.uname
+      uid: data.uid,
+      uname: data.uname,
+      authtoken:data.authtoken
     }
     dispatch(setUser(user))
-    console.log(data);
+    // console.log(data);
+    // localStorage.setItem("authtoken", data.authtoken)
     setLoading(false)
-    
+
   }
 
-  
+
   useEffect(() => {
     getUser()
   }, [])
-  
+
   if (authtoken === null) {
     return <Login></Login>
   }

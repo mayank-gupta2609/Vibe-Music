@@ -16,7 +16,7 @@ const PlaylistPage = () => {
     const location = useLocation();
     const dispatch = useDispatch()
     const authtoken: string = localStorage.getItem('authtoken')!
-    // console.log(url.pathname.split("/")[2])
+    // //console.log(url.pathname.split("/")[2])
 
     const getPlaylist = async () => {
         let headersList = {
@@ -30,8 +30,8 @@ const PlaylistPage = () => {
 
         let data = await response.json();
         // setPlaylistname(data.playlist[0].name)
-        console.log(data.songs)
-        console.log(data.playlist);
+        //console.log(data.songs)
+        //console.log(data.playlist);
         setPlaylist(data.playlist)
         setTracks(data.songs)
         // setTracks(data.songs)
@@ -39,11 +39,11 @@ const PlaylistPage = () => {
     }
 
     const handleClick = async (track: any) => {
-        console.log("object")
-        console.log(track._id)
-        console.log(url.pathname.split("/")[2])
+        //console.log("object")
+        //console.log(track._id)
+        //console.log(url.pathname.split("/")[2])
         let headersList = {
-            "auth-token": user.authtoken,
+            "auth-token": localStorage.getItem('authtoken')!,
             "Content-Type": "application/json"
         }
 
@@ -58,9 +58,9 @@ const PlaylistPage = () => {
             headers: headersList
         });
 
-        let data = await response.text();
+        let data = await response.json();
         console.log(data);
-
+        getPlaylist()
 
 
     }
@@ -85,7 +85,7 @@ const PlaylistPage = () => {
         // setData(data)
         // dispatch(setSearcheditems(data))
         setSearchedItems(data)
-        console.log(data);
+        //console.log(data);
     }
 
     useEffect(() => {
@@ -95,8 +95,9 @@ const PlaylistPage = () => {
 
     useEffect(() => {
         getPlaylist()
-        // console.log(url.pathname.split("/")[2])
+        // //console.log(url.pathname.split("/")[2])
         setPlaylistId(url.pathname.split("/")[2])
+        setSearchTerm("")
     }, [location])
 
 
@@ -118,37 +119,6 @@ const PlaylistPage = () => {
             {
                 tracks.length == 0 && <div className="playlistemptyinfo">
                     Seems like the playlist is empty
-                    <div className="inputforempltyplaylist">
-                        <div className="emptyplaylistholder">
-
-                            <input type="text" className="addmusictoplaylist"
-                                value={searchTerm}
-                                onChange={(e) => {
-                                    setSearchTerm(e.target.value);
-                                }}
-                                placeholder='Search for a song'
-                            />
-
-                            <div className="searchedsongs">
-
-                                {searchTerm !== "" &&
-                                    searcheditems.map((item: any) => {
-                                        return <div className="searchedsongitem" onClick={() => {
-                                            handleClick(item)
-                                        }}>
-                                            <img src={item?.img} height="100%" alt="" />
-                                            <div className="searchedmusicname">
-                                                {item?.name}
-                                            </div>
-
-                                        </div>
-                                    })
-                                }
-
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
             }
 
@@ -172,7 +142,7 @@ const PlaylistPage = () => {
                         return <div className="playlistsongdetail" onClick={() => {
                             dispatch(setSongsList(tracks))
                             dispatch(setSongIndex(index))
-                            dispatch(setAudio(songslist[index]))
+                            dispatch(setAudio(tracks[index]))
                         }}>
 
                             <div className="playlistinfoserialno">{index + 1}</div>
@@ -189,6 +159,38 @@ const PlaylistPage = () => {
                 }
             </div>
             }
+
+            <div className="inputforempltyplaylist">
+                <div className="emptyplaylistholder">
+
+                    <input type="text" className="addmusictoplaylist"
+                        value={searchTerm}
+                        onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                        }}
+                        placeholder='Search for a song to add to playlist'
+                    />
+
+                    <div className="searchedsongs">
+
+                        {searchTerm !== "" &&
+                            searcheditems.map((item: any) => {
+                                return <div className="searchedsongitem" onClick={() => {
+                                    handleClick(item)
+                                }}>
+                                    <img src={item?.img} height="100%" alt="" />
+                                    <div className="searchedmusicname">
+                                        {item?.name}
+                                    </div>
+
+                                </div>
+                            })
+                        }
+
+                    </div>
+
+                </div>
+            </div>
 
         </div>
     )

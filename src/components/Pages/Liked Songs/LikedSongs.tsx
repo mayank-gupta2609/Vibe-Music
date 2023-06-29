@@ -6,15 +6,15 @@ const LikedSongs = () => {
 
     const [likes, setLikes] = React.useState([])
 
-    const getSongs = async () => { 
+    const getSongs = async () => {
         const querySnapshot = await getDocs(collection(db, "Test Audio Files"));
         let data: any = []
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots 
             data.push(doc.data())
         });
-        console.log(data)
-        setLikes(data) 
+        //console.log(data)
+        setLikes(data)
     }
 
     React.useEffect(() => {
@@ -22,9 +22,9 @@ const LikedSongs = () => {
         const div = document.getElementById('playlist-container')
         // const add = document.getElementById("additionalTab")
         div?.addEventListener("scroll", () => {
-            // console.log(div.scrollTop)
+            // //console.log(div.scrollTop)
             let t: number = div.scrollTop / 220
-            console.log(t)
+            //console.log(t)
             document.getElementById("headerholder")?.style.setProperty("--alpha", t.toString())
             document.getElementById("additionalTab")?.style.setProperty("--opacity", t.toString())
         })

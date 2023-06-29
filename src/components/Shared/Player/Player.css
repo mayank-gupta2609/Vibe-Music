@@ -22,21 +22,24 @@
 
 .playerHolder {
     position: absolute;
-    height: 105px;
+    height: 108px;
     width: 100%;
     /* border:1px solid red; */
     border-radius: 10px;
     bottom: 0px;
     display: flex;
     /* background-color: transparent; */
-    z-index: 999
+    z-index: 999;
+    /* background-color: rgba(255, 255, 255, 0.1); */
+    /* backdrop-filter:blur(8px) */
 }
 
 .albumpic {
     height: 100%;
     /* border:1px solid blue; */
     width: 100px;
-    /* margin-top:0px */
+    transition:0.25s ease-in-out;
+    /* margin-top:2px */
 }
 
 img {
@@ -48,15 +51,17 @@ img {
     height: 100%;
     /* border:1px solid green; */
     width: 40%;
+    transition:0.25s ease-in-out;
 }
 
 .musicnameholder {
     height: 50%;
-    font-size: 28px;
+    font-size: 30px;
     color: white;
     padding-top: 3px;
     padding-left: 3px;
     box-sizing: border-box;
+    padding-top:14px
     /* border:1px solid red */
 }
 
@@ -64,11 +69,14 @@ img {
     height: 100%;
 }
 
-.artistsholder {
+.auddetailrtistsholder {
     height: 50%;
     display: flex;
     padding-left: 3px;
-    /* border:1px solid red */
+    /* border:1px solid red; */
+    font-size:18px;
+    color:rgb(184, 184, 184)
+
 }
 
 .artistnameholder {
@@ -77,16 +85,10 @@ img {
     /* border:1px solid red */
 }
 
-.audiocontrols {
-    --pointer: ;
-    --bg-color: transparent;
-}
-
 
 .audiocontrols {
     flex-grow: 1;
-    /* border:1px solid pink;  */
-    pointer-events: var(--pointer);
+    /* border:1px solid pink;  */ 
     /* background-color: var(--bg-color); */
     transition: 0.25s ease-in-out;
 }
@@ -142,23 +144,23 @@ img {
     height: 100%;
     /* background-color:orange; */
     /* visibility: var(--add-content-visibility); */
-    opacity:var(--add-content-opacity);
-    transition:0.2s ease-in
+    opacity: var(--add-content-opacity);
+    transition: 0.2s ease-in
 }
 
-.additionalContentOptionHolder { 
+.additionalContentOptionHolder {
     height: 28px;
     /* border:1px solid red; */
     display: flex;
-    flex-direction:column ;
+    flex-direction: column;
     justify-content: center;
     position: absolute;
     z-index: 90;
     transition: 0.25s ease-in-out;
     opacity: 1;
-    top:10px;
-    right:-10px;
-    height:200px;
+    top: 32%;
+    right: 2px;
+    height: 200px;
 }
 
 .additionalContentOptions {
@@ -189,7 +191,7 @@ img {
 .additionalContentHolder {
     width: 100%;
     /* border:1px solid green; */
-    height: 85%;
+    height: 100%;
     border-radius: 10px;
 }
 
@@ -218,10 +220,11 @@ img {
 .audioContentContainer {
     background-color: var(--background-color);
     background-image: var(--background-image-url);
+    transition:0.4s ease-in-out;
     background-size: 100%;
     filter: blur(200px);
     width: 100%;
-    height: 100%;
+    height: 85%;
     /* border: 1px solid red; */
 }
 
@@ -240,10 +243,9 @@ img {
 }
 
 
-.videoContentHolder {
-    color: pink;
+.videoContentHolder { 
     width: 100%;
-    height: 100%;
+    height: 85%;
     /* border:1px solid yellowgreen; */
     /* background-color: pink */
     /* position: relative; */
@@ -257,7 +259,7 @@ img {
     scroll-behavior: smooth;
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 85%;
     /* border: 1px solid yellow */
 }
 
@@ -277,15 +279,16 @@ img {
 }
 
 .lyricContentContainer {
-    --background-image-url: 
+    --background-image-url:
 }
 
 .lyricContentContainer {
     background-image: var(--background-image-url);
-    width:100%;
-    height:100%;
-    filter:blur(200px);
-    background-size:100% ;
+    transition:0.4s ease-in-out;
+    width: 100%;
+    height: 100%;
+    filter: blur(200px);
+    background-size: 100%;
 }
 
 .lyricsline {
@@ -294,8 +297,9 @@ img {
     position: absolute;
     z-index: 89;
     width: 100%;
-    height:100%;
-    overflow:auto;
+    height: 100%;
+    overflow: auto;
+    scroll-behavior: smooth;
 }
 
 .lyricsline::-webkit-scrollbar {
@@ -323,7 +327,7 @@ img {
     /* border: 1px solid red; */
     transition: 0.15s ease-in-out;
     background-color: transparent;
-    font-size:40px;
+    font-size: 40px;
 }
 
 .lyriclineactive {
@@ -339,16 +343,33 @@ img {
     height: 100%;
 }
 
+.queuebackground {
+    --background-image-url:
+}
+
+.queuebackground {
+    background-image: var(--background-image-url);
+    transition:0.4s ease-in-out;
+    background-size: 100%;
+    filter: blur(200px);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    /* background-color: red */
+}
 
 .queuecontents {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
-    border: 1px solid red;
+    height: 84.5%;
+    /* border: 1px solid red; */
     overflow: auto;
     align-items: end;
-    /* float: right; */
+    background-color: transparent;
+    position: absolute;
+    padding:20px;
+        /* float: right; */
 }
 
 .queueitem {
@@ -376,8 +397,27 @@ img {
 }
 
 .queueitemartist {
-    font-size: 25px;
+    font-size: 20px;
     display: flex;
     align-items: center;
     padding-right: 40px
+}
+
+.queuecontents::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+.queuecontents::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+.queuecontents::-webkit-scrollbar-thumb {
+    background: #323232;
+}
+
+/* Handle on hover */
+.queuecontents::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
