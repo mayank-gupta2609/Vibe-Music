@@ -147,6 +147,18 @@
     padding-bottom:3px;
 }
 
+.playlistscontent::-webkit-scrollbar {
+    width: 5px;
+    height: 8px;
+    background-color: rgb(27 27 27);
+    /* or add it to the track */
+}
+
+.playlistscontent::-webkit-scrollbar-thumb {
+    background: white;
+    border-radius: 8px;
+}
+
 .addplaylist {
     color: azure;
     font-size: 20px; 

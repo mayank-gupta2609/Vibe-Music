@@ -225,13 +225,17 @@ img {
     filter: blur(200px);
     width: 100%;
     height: 85%;
-    /* border: 1px solid red; */
+    /* border: 1px solid white; */
 }
 
 .audiocontentalbumpic {
     height: 300px;
     width: 300px;
-    position: absolute
+    position: absolute;
+    /* border:1px solid white; */
+    /* left:10px; */
+    /* bottom:120px; */
+    /* margin-bottom:40px */
 }
 
 .active {
@@ -256,7 +260,7 @@ img {
 }
 
 #lyricsholder {
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
     position: relative;
     width: 100%;
     height: 85%;
@@ -302,22 +306,22 @@ img {
     scroll-behavior: smooth;
 }
 
-.lyricsline::-webkit-scrollbar {
+::-webkit-scrollbar {
     width: 5px;
 }
 
 /* Track */
-.lyricsline::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background: transparent;
 }
 
 /* Handle */
-.lyricsline::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
     background: #323232;
 }
 
 /* Handle on hover */
-.lyricsline::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
 
