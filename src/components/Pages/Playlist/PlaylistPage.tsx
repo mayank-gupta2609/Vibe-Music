@@ -100,6 +100,21 @@ const PlaylistPage = () => {
         setSearchTerm("")
     }, [location])
 
+    useEffect(() => {
+        const add = document.getElementById("additionalTab")
+        const div = document.getElementById('playlist-container')
+        div?.addEventListener("scroll", () => {
+            // //console.log(div.scrollTop)
+            let t: number = div.scrollTop / 220
+            // //console.log(t)
+            document.getElementById("headerholder")?.style.setProperty("--alpha", t.toString())
+            document.getElementById("additionalTab")?.style.setProperty("--opacity", t.toString())
+            if (add) {
+                add.innerHTML = playlist[0]?.name
+            }
+        })
+    }, [])
+
 
     return (
         <div className="playlist-container">

@@ -24,7 +24,7 @@ const Player = () => {
     const method = useRef("post")
     const userlike = useRef(false)
     // const indexRef = useRef(songIndex)
-    const [lyrics, setLyrics] = useState<[string]>()
+    const [lyrics, setLyrics] = useState<[string]>([''])
     let audio1 = document.getElementById('audioplayer') as HTMLAudioElement
     const a: HTMLAudioElement = audio1!;
     let video = document.getElementById('mainVideo') as HTMLVideoElement
@@ -327,11 +327,6 @@ const Player = () => {
                     dispatch(setSongIndex((songIndex + 1)))
                     dispatch(setAudio(songslist[songIndex + 1]))
                 }
-// <<<<<<< HEAD
-
-
-// =======
-// >>>>>>> d314aa59d6cb745f081bb505dc9ab05d59e7c835
             });
 
             // v?.addEventListener("ended", () => {
@@ -499,14 +494,14 @@ const Player = () => {
                                 }} ></i>
                         </div>
                     </div>
-                    <audio src={audio ? audio?.location : ''} autoPlay 
-                    // ={request !== "video"} 
-                    loop={false} preload="metadata" id="audioplayer" controls={false}></audio>
+                    <audio src={audio ? audio?.location : ''} autoPlay
+                        // ={request !== "video"} 
+                        loop={false} preload="metadata" id="audioplayer" controls={false}></audio>
                     <div className="audioprogressbarholder">
                         {mediaProgress}
                         <div className="audioprogressbar" id="audioprogressbar" onClick={(e: any) => {
                             changeDuration(e)
-                        }}>
+                        }} >
 
                             <div className="audioprogressindicator" id="mediaProgressindicator">
                             </div>
@@ -520,21 +515,19 @@ const Player = () => {
                 <div className="additionalContentOptionHolder">
                     <div className={`additionalContentOptions ${request === "audio" ? "addContentOptionActive" : ""}`} onClick={() => {
                         VideoToAudio()
-                    }}><i className="fa-solid fa-music"></i></div>
+                    }}>
+                        <i className="fa-solid fa-music"></i>
+                    </div>
                     <div className={`additionalContentOptions ${request === "video" ? "addContentOptionActive" : ""}`} onClick={() => {
                         AudioToVideo()
                     }}><i className="fa-solid fa-video"></i></div>
                     <div className={`additionalContentOptions ${request === "lyrics" ? "addContentOptionActive" : ""}`} onClick={() => {
                         if (request == "video") {
-                            //                          
                             v?.pause()
                             a.currentTime = v?.currentTime
                             a?.play()
-                            // 
-                            // 
                         }
                         setRequest("lyrics")
-                        // if(v.)
                     }}><i className="fa-solid fa-align-center fa-rotate-90"></i></div>
                     <div className={`additionalContentOptions ${request === "queue" ? "addContentOptionActive" : ""}`} onClick={() => {
                         setRequest("queue")
@@ -570,7 +563,7 @@ const Player = () => {
 
                                         }
 
-                                        key={index}
+                                        key={index + 'A' + index}
 
                                     // onClick={() => {
                                     //     let audio1 = document.getElementById('audioplayer') as HTMLAudioElement
@@ -581,6 +574,9 @@ const Player = () => {
                                     >{line[2]}</div>
                                 })
                             }
+
+                             
+
                         </div>
 
 

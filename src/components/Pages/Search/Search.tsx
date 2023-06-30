@@ -8,7 +8,7 @@ const Search = () => {
   const [songs, setSongs] = useState<any>([])
   const [artists, setArtists] = useState<any>([])
   const [searchterm, setSearchterm] = useState<string>('')
-  const { user, audio, searchedterm } = useSelector((state: any) => state.user)
+  const { user, audio, searchedterm, songslist } = useSelector((state: any) => state.user)
   const [data, setData] = useState<any>([])
   const dispatch = useDispatch()
   //console.log(searchedterm)
@@ -103,10 +103,10 @@ const Search = () => {
         <div>
           <div className="row">
             <h1>Trending</h1>
-            <h4>See More</h4>
+            {/* <h4>See More</h4> */}
           </div>
           <div className="holder">
-            {songs.map((song: any, index: number) => {
+            {songslist?.map((song: any, index: number) => {
               return <SongCard song={song} index={index} onClick={() => {
 
               }}></SongCard>
@@ -114,7 +114,7 @@ const Search = () => {
           </div>
           <div className="row">
             <h1>Explore by Artist</h1>
-            <h4>See More</h4>
+            {/* <h4>See More</h4> */}
           </div>
           <div className="artistholderdiv">
             {artists?.map((artist: any) => {
@@ -134,7 +134,7 @@ const Search = () => {
 
           <h1> Explore by genre</h1>
           <div className="holder">
-            hi
+            
           </div>
 
         </div>

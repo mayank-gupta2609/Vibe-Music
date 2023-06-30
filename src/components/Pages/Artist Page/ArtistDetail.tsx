@@ -33,15 +33,17 @@ const ArtistDetail = () => {
 
     useEffect(() => {
 
+        const add = document.getElementById("additionalTab")
         const div = document.getElementById('artist-detail')
-        // const add = document.getElementById("additionalTab")
         div?.addEventListener("scroll", () => {
             // //console.log(div.scrollTop)
             let t: number = div.scrollTop / 220
             // //console.log(t)
             document.getElementById("headerholder")?.style.setProperty("--alpha", t.toString())
             document.getElementById("additionalTab")?.style.setProperty("--opacity", t.toString())
-            // document.getElementById("additionalTab")?.setInnerHTML = <p>{artistname}</p>
+            if (add) {
+                add.innerHTML = artistname
+            }
         })
 
 

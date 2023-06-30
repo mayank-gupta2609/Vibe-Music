@@ -108,6 +108,22 @@ const Sidebar = () => {
 
   }
 
+  const clearHistory = async () => {
+    console.log("object")
+    let headersList = { 
+      "auth-token": user?.authtoken,
+      "Content-Type": "application/json"
+    }
+
+    await fetch(`http://localhost:5000/api/history/clearhistory/${user?.uid}`, {
+      method: "POST",
+      headers: headersList
+    });
+
+
+    getHistory()
+  }
+
   React.useEffect(() => {
     // getLikes()
     getHistory()
@@ -181,9 +197,15 @@ const Sidebar = () => {
             {request === "history" &&
 
               <div>
-                <i className="fa-solid fa-arrows-rotate refresh" onClick={() => {
-                  getHistory()
-                }}></i>
+                <div className='historycontrols'>
+
+                  <i className="fa-solid fa-arrows-rotate refresh" onClick={() => {
+                    getHistory()
+                  }}></i>
+                  {/* <i className="fa-regular fa-trash-can" onClick={()=>{
+                    clearHistory()
+                  }}></i> */}
+                </div>
                 {history.length > 0 ? history?.map((m: any) => {
                   return <div className="musicItem">
                     <img src={m?.img} height="100%" alt="" />
@@ -206,7 +228,7 @@ const Sidebar = () => {
 
             {request === "playlist" &&
               <div className="playlists">
-                <i className="fa-solid fa-arrows-rotate refresh" onClick={() => {
+                <i className="fa-solid fa-arrows-rotate historycontrols" onClick={() => {
                   getPlaylists()
                 }}></i>
                 <div className="playlistscontent">

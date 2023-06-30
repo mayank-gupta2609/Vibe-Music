@@ -1,7 +1,7 @@
 import './Header.css'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { setSearchTerm, setUser } from '../../../redux/features/userSlice'
 
 const Header = () => {
@@ -12,7 +12,7 @@ const Header = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [data, setData] = useState([])
-
+    const location = useLocation();
 
 
     const getItems = async (e: any) => {
@@ -41,6 +41,11 @@ const Header = () => {
 
     }
 
+    useEffect(() => {
+        document.getElementById("headerholder")?.style.setProperty("--alpha", "0")
+        document.getElementById("additionalTab")?.style.setProperty("--opacity", "0")
+    }, [location])
+
 
     return (
         <div className="headerholder" id="headerholder">
@@ -58,12 +63,13 @@ const Header = () => {
                 </div>
             </form>
 
-            {/* <div className="additionalTab" id="additionalTab">
-                {artistname}
-            </div> */}
+            <div className="additionalTab" id="additionalTab">
+                {/* {artistname} */}
+
+            </div>
 
 
-            <div className="usernameholder" onClick={()=>{
+            <div className="usernameholder" onClick={() => {
                 localStorage.removeItem("authtoken")
                 dispatch(setUser(null))
             }}>
