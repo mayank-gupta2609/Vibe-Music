@@ -6,12 +6,13 @@ import { db } from '../../../firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { setAudio, setLiked, setLikedsongs, setLikesList, setSong, setSongIndex } from '../../../redux/features/userSlice';
+import { useLocation } from 'react-router';
 
 const Player = () => {
 
     const { audio, likedsongs, songIndex, songslist } = useSelector((state: any) => state.user)
     const { user, likeslist } = useSelector((state: any) => state.user)
-
+    const location = useLocation();
     const [request, setRequest] = useState<string>("audio")
     const [medState, setMedState] = useState<string>("pause")
     const [audioProgress, setAudioProgress] = useState<number>(0)
@@ -199,7 +200,7 @@ const Player = () => {
             setRequest("audio")
         }
 
-        if (request === "lyrics"|| request === "queue") {
+        if (request === "lyrics" || request === "queue") {
             setRequest("audio")
         }
     }
@@ -322,8 +323,10 @@ const Player = () => {
             // if (a) {
 
             a?.addEventListener("ended", () => {
-                // dispatch(setSongIndex((songIndex + 1)))
-                // dispatch(setAudio(songslist[songIndex + 1]))
+                if (songIndex < songslist.length - 1) {
+                    dispatch(setSongIndex((songIndex + 1)))
+                    dispatch(setAudio(songslist[songIndex + 1]))
+                }
             });
 
             a?.addEventListener('timeupdate', () => {
@@ -398,6 +401,14 @@ const Player = () => {
         setMediaDuration("0:00")
         dispatch(setSongIndex(0))
     }, [])
+
+    React.useEffect(() => {
+        if (expand) {
+            setExpand(false)
+            document.getElementById('playerholder')?.style.setProperty('--player-size', '16%');
+            document.getElementById('additionalContent')?.style.setProperty('--add-content-opacity', '0');
+        }
+    }, [location])
 
 
     return (
@@ -553,7 +564,7 @@ const Player = () => {
                                 songslist?.map((item: any, index: number) => {
                                     return <div className='queueitem' style={{
                                         opacity: songIndex === index ? "0.5" : "1"
-                                    }} key={item._id} onClick={()=>{
+                                    }} key={item._id} onClick={() => {
                                         dispatch(setAudio(item))
                                         dispatch(setSongIndex(index))
                                     }}>
