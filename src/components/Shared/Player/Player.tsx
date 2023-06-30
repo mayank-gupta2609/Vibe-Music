@@ -327,8 +327,11 @@ const Player = () => {
                     dispatch(setSongIndex((songIndex + 1)))
                     dispatch(setAudio(songslist[songIndex + 1]))
                 }
+// <<<<<<< HEAD
 
 
+// =======
+// >>>>>>> d314aa59d6cb745f081bb505dc9ab05d59e7c835
             });
 
             // v?.addEventListener("ended", () => {
