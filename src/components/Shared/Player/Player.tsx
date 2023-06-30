@@ -113,7 +113,7 @@ const Player = () => {
     }
 
     const toggleMediaState = () => {
-        if (request === "audio" || request === "lyrics") {
+        if (request === "audio" || request === "lyrics" || request === "queue") {
             if (a?.currentTime >= 0 && a?.paused) {
                 a.play();
                 setMedState("play")
@@ -274,7 +274,7 @@ const Player = () => {
         let x = audioprog?.getClientRects()!
         let time = (Math.abs(e.clientX - x[0].left) / audioprog?.clientWidth)
 
-        if (request === "audio" || request === "lyrics") {
+        if (request === "audio" || request === "lyrics" || request === "queue") {
             a.currentTime = a.duration * time
             document.getElementById('mediaProgressindicator')?.style.setProperty('--progress-width', (time * 100).toString() + "%");
         } else if (request === "video") {
@@ -327,7 +327,16 @@ const Player = () => {
                     dispatch(setSongIndex((songIndex + 1)))
                     dispatch(setAudio(songslist[songIndex + 1]))
                 }
+
+
             });
+
+            // v?.addEventListener("ended", () => {
+            //     if (songIndex < songslist.length - 1) {
+            //         dispatch(setSongIndex((songIndex + 1)))
+            //         dispatch(setAudio(songslist[songIndex + 1]))
+            //     }
+            // });
 
             a?.addEventListener('timeupdate', () => {
                 let time = a.currentTime / a.duration
@@ -387,11 +396,30 @@ const Player = () => {
             v?.addEventListener("loadeddata", () => {
                 setMediaDuration(Math.floor(v?.duration / 60) + ':' + ('0' + Math.floor(v?.duration % 60)).slice(-2))
             })
+
+            // v?.addEventListener("ended", () => {
+            //     if (songIndex < songslist.length - 1) {
+            //         dispatch(setSongIndex((songIndex + 1)))
+            //         dispatch(setAudio(songslist[songIndex + 1]))
+            //     }
+            //     a?.pause();
+            //     v?.play()
+            // });
+
+
         }
 
         if (request === "audio") {
             // a?.addEventListener("loadeddata", () => {
             setMediaDuration(Math.floor(a?.duration / 60) + ':' + ('0' + Math.floor(a?.duration % 60)).slice(-2))
+            a?.addEventListener("ended", () => {
+                if (songIndex < songslist.length - 1) {
+                    dispatch(setSongIndex((songIndex + 1)))
+                    dispatch(setAudio(songslist[songIndex + 1]))
+                }
+            });
+
+            // v?.pause();
             // })
         }
 
@@ -468,7 +496,9 @@ const Player = () => {
                                 }} ></i>
                         </div>
                     </div>
-                    <audio src={audio ? audio?.location : ''} autoPlay loop={false} preload="metadata" id="audioplayer" controls={false}></audio>
+                    <audio src={audio ? audio?.location : ''} autoPlay 
+                    // ={request !== "video"} 
+                    loop={false} preload="metadata" id="audioplayer" controls={false}></audio>
                     <div className="audioprogressbarholder">
                         {mediaProgress}
                         <div className="audioprogressbar" id="audioprogressbar" onClick={(e: any) => {

@@ -13,9 +13,13 @@ const App = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState<boolean>(true)
+
+
+
   const getUser = async () => {
+
     setLoading(true)
-    let headersList = { 
+    let headersList = {
       "auth-token": authtoken
     }
 
@@ -28,7 +32,7 @@ const App = () => {
     const user = {
       uid: data.uid,
       uname: data.uname,
-      authtoken:data.authtoken
+      authtoken: data.authtoken
     }
     dispatch(setUser(user))
     console.log(data.authtoken);
@@ -38,13 +42,18 @@ const App = () => {
   }
 
 
+  if (authtoken === null) return <Login/>
   useEffect(() => {
+    
     getUser()
   }, [])
 
-  if (authtoken === null) {
-    return <Login></Login>
-  }
+
+
+
+  // if (authtoken === null) {
+  //   return <Login></Login>
+  // }
   return (
     <div>
       {loading && <Loader></Loader>}

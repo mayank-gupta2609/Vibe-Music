@@ -124,11 +124,16 @@ img {
 .audioprogressbar {
     width: 80%;
     height: 4px;
-    background-color: black;
+    background-color: rgb(112, 112, 112);
     position: relative;
     /* border:1px solid red; */
     /* margin-left:10px;
     margin-right:10px */
+    transition:0.1s ease-in-out;
+}
+
+.audioprogressbar:hover{ 
+    height:7px;
 }
 
 .audioprogressindicator {
@@ -136,6 +141,7 @@ img {
     height: 100%;
     width: var(--progress-width);
     background-color: var(--bar-color);
+    transition:10ms ease-in-out;
 }
 
 .additionalContent {
@@ -145,7 +151,7 @@ img {
     /* background-color:orange; */
     /* visibility: var(--add-content-visibility); */
     opacity: var(--add-content-opacity);
-    transition: 0.2s ease-in
+    transition: 0.2s ease-in-out
 }
 
 .additionalContentOptionHolder {

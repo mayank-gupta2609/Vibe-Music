@@ -64,7 +64,7 @@ const ArtistDetail = () => {
             </div>
             <h1>Albums</h1>
             <div className="holder">
-                {albums.map((album: any) => {
+                {albums?.map((album: any) => {
                     return <div className='albumcard'>
                         <img src={album.img} width="100%" alt="" />
                         <div className="albumname">
@@ -76,7 +76,7 @@ const ArtistDetail = () => {
 
             <h1>Songs</h1>
             <div className="holder">
-                {songs.map((song: any) => {
+                {songs?.map((song: any) => {
                     return <div className='albumcard'>
                         <img src={song?.img} width="100%" alt="" />
                         <div className="albumname">

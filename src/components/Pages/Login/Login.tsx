@@ -40,13 +40,12 @@ const Login = () => {
         if (json.success) {
             token = json.authtoken;
             localStorage.setItem('authtoken', token);
-            const user = {
-                uid: json.uid,
-                uname: json.uname
-            }
-            dispatch(setUser(user))
-            //console.log(json)
-            // //console.log(playlists) 
+            // const user = {
+            //     uid: json.uid,
+            //     uname: json.uname
+            // }
+            // dispatch(setUser(user)) 
+            window.location.reload() 
 
 
         }
@@ -66,14 +65,16 @@ const Login = () => {
         });
 
         const json = await resposnse.json();
-        //console.log(json)
-        let uid
+        console.log(json)
         if (json.authtoken) {
             token = json.authtoken;
             localStorage.setItem('authtoken', token);
-            uid = json.user._id;
-            //console.log(json.user._id)
-            dispatch(setUser(json))
+            // const user = json
+            // dispatch(setUser(user))
+            //console.log(json)
+            // //console.log(playlists) 
+            // navigate("/")
+            window.location.reload()
         }
 
 
@@ -151,7 +152,7 @@ const Login = () => {
 
                             <div className="pwd">
 
-                                <input type="text" className='logininput' value={password} onChange={(e) => {
+                                <input type="password" className='logininput' value={password} onChange={(e) => {
                                     setPassword(e.target.value)
                                 }} />
                             </div>
