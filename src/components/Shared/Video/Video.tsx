@@ -25,10 +25,10 @@ const Video = () => {
                 </div>
                 </div> */}
                 <div className="mainVideo" >
-                    <video src="" height="100%" width="100%" id="mainVideo" onContextMenu={(e) => e.preventDefault()}></video>
+                    <video src="" height="100%" width="100%" id="mainVideo" onContextMenu={(e) => e.preventDefault()} ></video>
                 </div>
-                {/* <div className="backVideo"  >
-                    <video src="" id="backVideo" width="140%" height="100%" onContextMenu={(e) => e.preventDefault()} muted></video>
+                {/* <div className="backVideo" >
+                    <video src={v?.src} id="mainVideo" width="100%" height="100%" onContextMenu={(e) => e.preventDefault()} ></video>
                 </div> */}
             </div>
         </div>

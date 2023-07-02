@@ -1,8 +1,76 @@
-.album-page{
+.album-page {
     width: 100%;
     height: 100%;
-    padding-top:60px;
-    padding-bottom:100px;
-    border:1px solid red;
+    padding-top: 60px;
+    padding-bottom: 100px;
+    /* border: 1px solid red; */
     overflow: auto;
+    display: flex;
+}
+
+.albuminfo {
+    width: 300px;
+    position: relative;
+    /* border: 2px solid red; */
+    height: 100%;
+    padding-top: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+
+}
+
+.albuminfoholder {
+    position: absolute;
+    z-index: 13;
+}
+
+.albumbackground {
+    --url: ''
+}
+
+.albumbackground {
+    background-image: var(--url);
+    filter: blur(60px);
+    position: absolute;
+    background-size: 100%;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    top: 10px;
+    background-repeat: repeat-y;
+    /* background-color:red */
+}
+
+.albuminfoname {
+    font-size: 50px;
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+.albuminfocount {
+    font-size: 18px;
+    color: rgb(178, 178, 178);
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+.albumcontent {
+    flex-grow: 1;
+    /* border:1px solid red; */
+    flex-direction: column;
+    font-size: 30px;
+    padding: 20px;
+    padding-top: 50px;
+    display: flex;
+    /* justify-content: flex-end; */
+}
+
+.albummusicitem {
+    /* border: 1px solid blue; */
+    display: flex;
+    height: 50px;
+    /* justify-content: flex-end; */
+    margin-bottom:15px ;
+}
+
+.albummusicitemname { 
+    margin-left:40px
 }

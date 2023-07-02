@@ -71,7 +71,9 @@ const Header = () => {
 
             <div className="usernameholder" onClick={() => {
                 localStorage.removeItem("authtoken")
-                dispatch(setUser(null))
+                window.location.reload()
+                // navigate("/")
+                // dispatch(setUser(null))
             }}>
                 {user?.uname}
             </div>

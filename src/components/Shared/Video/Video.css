@@ -7,7 +7,7 @@
 .videoContainer{ 
     width:100%;
     height: 100%;  
-    background-color:black;
+    /* background-color:black; */
     /* border:1px solid red; */
     display:flex;
     align-items:center;
@@ -128,12 +128,11 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    filter: blur(900px); 
-    z-index:-1;
-    display: flex;
-    justify-content:center;
-    background-color: transparent;
+    filter: blur(10px); 
+    z-index:15; 
     opacity:1;
-    transition: 1.5s ease-in-out; 
+    top:0px;
+    border:1px solid red
+    /* transition: 1.5s ease-in-out;  */
 }
 

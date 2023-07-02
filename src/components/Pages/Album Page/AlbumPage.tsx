@@ -1,42 +1,78 @@
-import React from 'react' 
+import React from 'react'
+import './Albumpage.css'
+import { useDispatch } from 'react-redux'
+import { setAudio, setSongIndex, setSongsList } from '../../../redux/features/userSlice'
+import { useLocation } from 'react-router'
 
 const AlbumPage = () => {
-  return (
-    <div className="playlist-container">
-    <div className="playlistheader">
-        <img src="https://yt3.googleusercontent.com/g3j3iOUOPhNxBCNAArBqiYGzHzCBIzr_Al8mdvtBJeZMGFDblnU5rlVUt6GY01AUwm7Cp70J=s900-c-k-c0x00ffffff-no-rj" height="100%" alt="" />
 
-        <div className="playlistheaderdetails">
-            <div className="playlistheadername">
-                Album name
+    const dispatch = useDispatch()
+    const [albuminfo, setAlbumInfo] = React.useState<any>([])
+    const location = useLocation()
+    console.log(window.location.href.split("/")[4])
+    const getAlbumInfo = async () => {
+        let headersList = {
+            "Accept": "*/*",
+            "User-Agent": "Thunder Client (https://www.thunderclient.com)"
+        }
+
+        let response = await fetch(`http://localhost:5000/api/albums/getalbums/${window.location.href.split("/")[4]}`, {
+            method: "GET",
+            headers: headersList
+        });
+ 
+        let data = await response.json();
+       
+        document.getElementById("albumbackground")?.style.setProperty("--url", `url(${data?.album__?.img})`)
+        setAlbumInfo(data)
+        console.log(data.album__.img);
+    }
+
+    React.useEffect(() => {
+        getAlbumInfo()
+    }, [])
+
+
+    return (
+        <div className="album-page"> 
+            <div className="albuminfo" >
+                <div className="albumbackground" id="albumbackground">
+
+                </div>
+                <div className="albuminfoholder">
+
+                    <img src={albuminfo?.album__?.img} width="100%" alt="" />
+
+                    <div className="albuminfodetails">
+                        <div className="albuminfoname">
+                            {albuminfo?.album__?.name}
+                        </div>
+                        <div className="albuminfocount">
+                            {albuminfo?.songs?.length} songs
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="playlistheadercount">
-                12 Songs
+
+            <div className="albumcontent">
+                {
+                    albuminfo?.songs?.map((song: any, index: number) => {
+                        return <div key={song._id} className='albummusicitem' onClick={() => {
+                            dispatch(setSongIndex(index))
+                            dispatch(setSongsList(albuminfo?.songs))
+                            dispatch(setAudio(song))
+                        }}>
+                            <img src={song.img} alt="" height="100%" />
+                            <div className="albummusicitemname">{song.name}</div>
+                        </div>
+                    })
+                }
             </div>
+
+
+
         </div>
-    </div>
-
-    <div className="playlistinforow">
-        <div className="playlistinfoserialno">#</div>
-        <div className="playlistinfoname">Name</div>
-        <div className="playlistinfoduration">Duration</div>
-    </div>
-
-
-    <div className="playlistsongdetail">
-        <div className="playlistinfoserialno">1</div>
-        <div className="playlistinfoname">Music 1 name</div>
-        <div className="playlistinfoduration">4:44</div>
-    </div>
-    <div className="playlistsongdetail">
-        <div className="playlistinfoserialno">1</div>
-        <div className="playlistinfoname">Music 1 name</div>
-        <div className="playlistinfoduration">4:44</div>
-    </div>
-
-
-</div>
-  )
+    )
 }
 
 export default AlbumPage

@@ -67,8 +67,8 @@ i {
   position: relative;
   /* added */
   padding-bottom: 30px;
-
-  overflow: clip
+  overflow: clip;
+  /* background-image: linear-gradient(to right top, #000000, #3f2d35, #7c586e, #b988b1, #f4beff); */
 }
 
 .holder {

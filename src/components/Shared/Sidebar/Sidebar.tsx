@@ -47,17 +47,19 @@ const Sidebar = () => {
       "Content-Type": "application/json"
     }
 
-    let response = await fetch(`http://localhost:5000/api/history/gethistory/${user?.uid}`, {
-      method: "GET",
-      headers: headersList
-    });
+    try {
 
-    let data = await response.json();
+      let response = await fetch(`http://localhost:5000/api/history/gethistory/${user?.uid}`, {
+        method: "GET",
+        headers: headersList
+      });
 
+      let data = await response.json();
 
-    //console.log(data)
-    // setHid(data.history[0]._id)
-    setHistory(data.songs)
+      setHistory(data.songs)
+    } catch (err) {
+      console.log(err)
+    }
 
     // setLoading(false)
 
@@ -108,21 +110,21 @@ const Sidebar = () => {
 
   }
 
-  const clearHistory = async () => {
-    console.log("object")
-    let headersList = { 
-      "auth-token": user?.authtoken,
-      "Content-Type": "application/json"
-    }
+  // const clearHistory = async () => {
+  //   console.log("object")
+  //   let headersList = {
+  //     "auth-token": user?.authtoken,
+  //     "Content-Type": "application/json"
+  //   }
 
-    await fetch(`http://localhost:5000/api/history/clearhistory/${user?.uid}`, {
-      method: "POST",
-      headers: headersList
-    });
+  //   await fetch(`api/history/clearhistory/${user?.uid}`, {
+  //     method: "POST",
+  //     headers: headersList
+  //   });
 
 
-    getHistory()
-  }
+  //   getHistory()
+  // }
 
   React.useEffect(() => {
     // getLikes()
@@ -201,10 +203,7 @@ const Sidebar = () => {
 
                   <i className="fa-solid fa-arrows-rotate refresh" onClick={() => {
                     getHistory()
-                  }}></i>
-                  {/* <i className="fa-regular fa-trash-can" onClick={()=>{
-                    clearHistory()
-                  }}></i> */}
+                  }}></i> 
                 </div>
                 {history.length > 0 ? history?.map((m: any) => {
                   return <div className="musicItem">

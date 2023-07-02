@@ -34,6 +34,7 @@ const PlaylistPage = () => {
         //console.log(data.playlist);
         setPlaylist(data.playlist)
         setTracks(data.songs)
+        document.getElementById('headerbackground')?.style.setProperty('--url', `url(${data.songs[0]?.img})`);
         // setTracks(data.songs)
         // setLoading(false);
     }
@@ -89,20 +90,10 @@ const PlaylistPage = () => {
     }
 
     useEffect(() => {
-        fetchSearchResults()
-    }, [searchTerm])
-
-
-    useEffect(() => {
-        getPlaylist()
-        // //console.log(url.pathname.split("/")[2])
-        setPlaylistId(url.pathname.split("/")[2])
-        setSearchTerm("")
-    }, [location])
-
-    useEffect(() => {
         const add = document.getElementById("additionalTab")
         const div = document.getElementById('playlist-container')
+
+
         div?.addEventListener("scroll", () => {
             // //console.log(div.scrollTop)
             let t: number = div.scrollTop / 220
@@ -115,18 +106,38 @@ const PlaylistPage = () => {
         })
     }, [])
 
+    useEffect(() => {
+        fetchSearchResults()
+    }, [searchTerm])
+
+
+    useEffect(() => {
+        getPlaylist()
+        // //console.log(url.pathname.split("/")[2])
+        document.getElementById('headerbackground')?.style.setProperty('--url', `url(${tracks[0]?.img})`);
+
+        setPlaylistId(url.pathname.split("/")[2])
+        setSearchTerm("")
+    }, [location])
+
+
+
 
     return (
         <div className="playlist-container">
             <div className="playlistheader">
-                <img src={tracks[0]?.img} height="100%" alt="" />
+                <div className="headerbackground" id="headerbackground"></div>
+                <div className='headerdetails'>
 
-                <div className="playlistheaderdetails">
-                    <div className="playlistheadername">
-                        {playlist[0]?.name}
-                    </div>
-                    <div className="playlistheadercount">
-                        {tracks.length > 0 ? `${tracks.length} songs` : ""}
+                    <img src={tracks[0]?.img} height="100%" alt="" />
+
+                    <div className="playlistheaderdetails">
+                        <div className="playlistheadername">
+                            {playlist[0]?.name}
+                        </div>
+                        <div className="playlistheadercount">
+                            {tracks.length > 0 ? `${tracks.length} songs` : ""}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -168,7 +179,7 @@ const PlaylistPage = () => {
                                 {track?.artist?.join(",")}
                             </div>
                             {/* <div className="playlistinfoduration">4:44</div> */}
-                            <i className="fa-solid fa-trash"></i>
+                            {/* <i className="fa-solid fa-trash"></i> */}
                         </div>
                     })
                 }

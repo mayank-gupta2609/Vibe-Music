@@ -39,7 +39,7 @@ const Home = () => {
 
     const getSongs = async () => {
         setLoading(true)
-        let data = await fetch('http://localhost:5000/api/songs/getallsongs');
+        let data = await fetch('api/songs/getallsongs');
         let response = await data.json();
         // //console.log(response)
         settracks(response);
@@ -54,7 +54,7 @@ const Home = () => {
         }
 
 
-        let response = await fetch(`http://localhost:5000/api/likedsongs/getlikedsongs/${user?.uid}`, {
+        let response = await fetch(`api/likedsongs/getlikedsongs/${user?.uid}`, {
             method: "GET",
             headers: headersList
         });

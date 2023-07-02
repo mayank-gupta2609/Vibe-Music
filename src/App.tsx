@@ -5,6 +5,7 @@ import Login from './components/Pages/Login/Login';
 import { useNavigate } from 'react-router';
 import { setUser } from './redux/features/userSlice';
 import Loader from './components/Shared/Loader/Loader';
+import env from "react-dotenv";
 
 const App = () => {
 
@@ -22,7 +23,7 @@ const App = () => {
     let headersList = {
       "auth-token": authtoken
     }
-
+    // https://backend-lake-gamma.vercel.app
     let response = await fetch("http://localhost:5000/api/auth/getuser", {
       method: "POST",
       headers: headersList
@@ -42,14 +43,13 @@ const App = () => {
   }
 
 
-  if (authtoken === null) return <Login/>
+  if (authtoken === null) return <Login />
+
+
   useEffect(() => {
-    
+    // console.log(process.env.DATA_URL)
     getUser()
   }, [])
-
-
-
 
   // if (authtoken === null) {
   //   return <Login></Login>

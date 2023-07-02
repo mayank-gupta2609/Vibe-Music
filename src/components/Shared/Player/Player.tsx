@@ -6,6 +6,7 @@ import { db } from '../../../firebaseConfig';
 import { collection, getDocs } from 'firebase/firestore';
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { setAudio, setLiked, setLikedsongs, setLikesList, setSong, setSongIndex } from '../../../redux/features/userSlice';
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { useLocation } from 'react-router';
 
 const Player = () => {
@@ -29,6 +30,16 @@ const Player = () => {
     const a: HTMLAudioElement = audio1!;
     let video = document.getElementById('mainVideo') as HTMLVideoElement
     const v: HTMLVideoElement = video;
+    // const [audiourl, setAudioUrl] = useState<string>("")
+    // console.log(process.env.DATA_URL)
+    // if (audio) {
+    //     const storage = getStorage();
+    //     const audioRef = ref(storage, `audios/${audio?.artist[0]}/${audio?.name}.mp3`);
+    //     getDownloadURL(audioRef)
+    //         .then((url) => {
+    //             setAudioUrl(url)
+    //         })
+    // }
 
     const checkLike = async () => {
         let headersList = {
@@ -168,9 +179,18 @@ const Player = () => {
             // let audio1_ = document.getElementById('audioplayer') as HTMLAudioElement
             // const v: HTMLVideoElement = video;
             // const a: HTMLAudioElement = audio1_;
-            v.src = audio?.location.replace('audio', 'video').replace('mp3', 'mp4')
+            // const storage = getStorage();
+            // const videoRef = ref(storage, `audios/${audio?.artist[0]}/${audio?.name}.mp3`);
+            // getDownloadURL(videoRef)
+            //     .then((url) => {
+            //         v.src = url
+            //         // audio?.location.replace('audio', 'video').replace('mp3', 'mp4')
+
+            //         // setAudioUrl(url)
+            //     })
             // setVState("play")
             // setMedState("pause")
+            v.src = audio?.location.replace('audio', 'video').replace('mp3', 'mp4')
             setMedState("play")
             v.currentTime = a.currentTime;
             v.play();
@@ -178,11 +198,15 @@ const Player = () => {
             setRequest("video")
         }
 
-        if (request === "lyrics" || request === "queue") {
+        if (request === "lyrics") {
             setRequest("video")
             a.pause();
             v.currentTime = a.currentTime
             v.play()
+        }
+
+        if (request === "queue") {
+            setRequest("video")
         }
 
     }
@@ -241,7 +265,7 @@ const Player = () => {
     //         "track": audio?.name
     //     });
 
-    //     let response = await fetch(`http://localhost:5000/api/likedsongs/${op}likedsongs/${user.uid}`, {
+    //     let response = await fetch(`api/likedsongs/${op}likedsongs/${user.uid}`, {
     //         method: method,
     //         body: bodyContent,
     //         headers: headersList
@@ -494,7 +518,10 @@ const Player = () => {
                                 }} ></i>
                         </div>
                     </div>
-                    <audio src={audio ? audio?.location : ''} autoPlay
+                    <audio
+                        src={audio ? audio?.location : ''}
+                        // src={audiourl}
+                        autoPlay
                         // ={request !== "video"} 
                         loop={false} preload="metadata" id="audioplayer" controls={false}></audio>
                     <div className="audioprogressbarholder">
@@ -575,7 +602,7 @@ const Player = () => {
                                 })
                             }
 
-                             
+
 
                         </div>
 

@@ -134,7 +134,7 @@ const Search = () => {
 
           <h1> Explore by genre</h1>
           <div className="holder">
-            
+
           </div>
 
         </div>

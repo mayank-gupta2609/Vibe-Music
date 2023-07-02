@@ -45,7 +45,7 @@ const Login = () => {
             //     uname: json.uname
             // }
             // dispatch(setUser(user)) 
-            window.location.reload() 
+            window.location.reload()
 
 
         }
@@ -171,7 +171,7 @@ const Login = () => {
                         </div>
                         <button className="login-button" style={{
                             opacity: uname.length > 4 && password.length > 6 ? '1' : '0.4',
-                        }} disabled={uname.length < 4 && password.length < 6 && email.length < 4}>Sign Up</button>
+                        }} disabled={uname.length < 4 && password.length < 6 && email.length < 6}>Sign Up</button>
 
 
                     </div>

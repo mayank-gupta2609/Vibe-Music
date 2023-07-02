@@ -7,6 +7,7 @@
     height: 100%;
     /* border: 1px solid red;   */
     overflow: auto; 
+    overflow-x: hidden;
     
 }
 
@@ -14,9 +15,34 @@
     width: 100%;
     height: 40%;
     /* background-color:red; */
-    padding-top: 70px;
-    padding-left: 20px;
+    /* padding-top: 70px; */
+    /* padding-left: 20px; */
     display: flex;
+    position: relative;
+}
+
+.headerbackground{
+    --url:
+}
+
+.headerbackground{
+    height:100%;
+    width:100%;
+    position: absolute;
+    /* background-color:red */
+    background-image: var(--url);
+    filter:blur(150px);
+    transition:0.3s ease-in-out
+}
+
+.headerdetails{
+    width:100%;
+    /* border:1px solid red; */
+    height:70%;
+    display: flex;
+    position: absolute;
+    margin-top:75.5px;
+    margin-left:20px
 }
 
 .playlistheaderdetails{ 
@@ -160,4 +186,5 @@ span{
 .playlistinfoartist{
     width:15%;
     /* border:1px solid red */
+    padding-right:5px
 }

@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setAudio, setSongIndex, setSongsList } from '../../../redux/features/userSlice'
 
 const ArtistDetail = () => {
     const [albums, setalbums] = useState<any>([])
     const [songs, setSongs] = useState<any>([])
     const { id } = useParams()
     const { artist, artistname } = useSelector((state: any) => state.artist)
-
+    const [avatar, setAvatar] = useState<string>("")
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    // navigate(`/artists/${"@" + a.split(" ").join("")}`)
     //console.log(artistname)
     //console.log(id)
 
@@ -24,8 +29,9 @@ const ArtistDetail = () => {
         });
 
         let data = await response.json();
-        //console.log(data);
+        console.log(data);
         // //console.log(data[0]?.albums) 
+        setAvatar(data[0]?.avatar)
         setalbums(data[0]?.albums)
         setSongs(data[0]?.songs)
         //console.log(data?.a); 
@@ -37,7 +43,7 @@ const ArtistDetail = () => {
         const div = document.getElementById('artist-detail')
         div?.addEventListener("scroll", () => {
             // //console.log(div.scrollTop)
-            let t: number = div.scrollTop / 220
+            let t: number = div.scrollTop / 620
             // //console.log(t)
             document.getElementById("headerholder")?.style.setProperty("--alpha", t.toString())
             document.getElementById("additionalTab")?.style.setProperty("--opacity", t.toString())
@@ -60,14 +66,16 @@ const ArtistDetail = () => {
                 <div className="artistnameheader">
                     {artistname}
                 </div>
-                <img src="https://yt3.googleusercontent.com/g3j3iOUOPhNxBCNAArBqiYGzHzCBIzr_Al8mdvtBJeZMGFDblnU5rlVUt6GY01AUwm7Cp70J=s900-c-k-c0x00ffffff-no-rj" width="100%" alt="" />
-
+                <img src={avatar} height="100%" alt="" className="avatarback" />
+                <img src={avatar} height="100%" alt="" className="avatar" />
 
             </div>
             <h1>Albums</h1>
             <div className="holder">
                 {albums?.map((album: any) => {
-                    return <div className='albumcard'>
+                    return <div className='albumcard' onClick={() => {
+                        navigate(`/album/${album._id}`)
+                    }}>
                         <img src={album.img} width="100%" alt="" />
                         <div className="albumname">
                             {album.name}
@@ -78,10 +86,14 @@ const ArtistDetail = () => {
 
             <h1>Songs</h1>
             <div className="holder">
-                {songs?.map((song: any) => {
-                    return <div className='albumcard'>
+                {songs?.map((song: any, index: number) => {
+                    return <div className='artistsongcard' onClick={() => {
+                        dispatch(setAudio(song))
+                        dispatch(setSongsList(songs))
+                        dispatch(setSongIndex(index))
+                    }}>
                         <img src={song?.img} width="100%" alt="" />
-                        <div className="albumname">
+                        <div className="artistsongcardname">
                             {song?.name}
                         </div>
                     </div>

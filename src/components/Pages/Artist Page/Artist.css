@@ -25,6 +25,19 @@
     background: #555;
 }
 
+.avatar {
+    position: absolute;
+    right: 0px;
+    z-index:11
+}
+
+.avatarback{
+    filter:blur(400px);
+    position: absolute;
+    z-index:10;
+    right:10px; 
+}
+
 .artist-container {
     width: 100%;
     height: 100%;
@@ -34,17 +47,18 @@
 
 .topheader {
     width: 100%;
-    height: 50%;
-    overflow: hidden;
+    height: 80%; 
     position: relative;
 }
 
 .artistnameheader {
     position: absolute;
-    bottom: 0px;
+    /* bottom: 0px; */
     font-size: 85px;
     left: 20px;
     font-family: 'Josefin Sans', sans-serif;
+    top:50%;
+    z-index:15
 }
 
 .albumcard {
@@ -56,6 +70,20 @@
     background-color: #212121;
     border-radius: 7px;
     overflow: hidden
+}
+
+.artistsongcard {
+    height: 250px;
+    width: 200px;
+    /* border:1px solid red; */
+    flex-shrink: 0;
+    margin: 10px;
+    background-color: #212121;
+    border-radius: 7px;
+    overflow: hidden;
+    font-size:19px;
+    text-align: center;
+    border-bottom:2px solid hotpink
 }
 
 .albumname {

@@ -26,6 +26,7 @@ const PageContent = () => {
                 <Route path="history" element={<History />}></Route>
                 <Route path="artists" element={< Artist />}></Route>
                 <Route path="artists/:id" element={< ArtistDetail />}></Route>
+                <Route path="album/:id" element={< AlbumPage />}></Route>
             </Routes>
             {/* </Router> */} 
         </div>
