@@ -294,7 +294,7 @@ img {
 
 .lyricContentContainer {
     background-image: var(--background-image-url);
-    transition:0.4s ease-in-out;
+    transition:0.1s ease-in-out;
     width: 100%;
     height: 100%;
     filter: blur(200px);
@@ -335,9 +335,10 @@ img {
     width: 100%;
     height: fit-content;
     /* border: 1px solid red; */
-    transition: 0.15s ease-in-out;
+    transition: 100ms ease-in-out;
     background-color: transparent;
     font-size: 40px;
+    padding-left:10px
 }
 
 .lyriclineactive {

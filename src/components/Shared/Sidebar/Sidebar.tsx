@@ -153,13 +153,28 @@ const Sidebar = () => {
         <div className="libOptionHolder">
           <div className="libOptions" onClick={() => {
             setRequest("likes")
-          }}>Liked</div>
+          }}
+            style={{
+              border: request === "likes" ? "1px solid white":""
+            }}
+
+          >Liked</div>
           <div className="libOptions" onClick={() => {
             setRequest("history")
-          }}>History</div>
+          }}
+            style={{
+              border: request === "history" ? "1px solid white":""
+            }}
+
+          >History</div>
           <div className="libOptions" onClick={() => {
             setRequest("playlist")
-          }}> Playlists</div>
+          }}
+            style={{
+              border: request === "playlist" ? "1px solid white":""
+            }}
+
+          > Playlists</div>
 
         </div>
         <div className="libContent">

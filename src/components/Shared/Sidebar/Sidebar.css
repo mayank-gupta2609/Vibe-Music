@@ -41,7 +41,7 @@
 }
 
 .libOptionHolder {
-    color: red;
+    /* color: red; */
     display: flex;
     overflow-x: auto;
     width: 100%;
@@ -53,7 +53,7 @@
 .libOptions {
     font-size: 18px;
     color: aliceblue;
-    border-radius: 4px;
+    border-radius: 8px;
     margin-left: 5px;
     background-color: rgb(40, 40, 40);
     padding: 8px;
